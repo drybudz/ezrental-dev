@@ -17,8 +17,11 @@ export default defineConfig({
   basePath: '/admin',
   projectId,
   dataset,
+  apiVersion: "2025-10-16",
   // Add and edit the content schema in the './sanity/schemaTypes' folder
-  schema,
+  schema: {
+    types: schema.types
+},
   plugins: [
     structureTool({structure}),
     // Vision is for querying with GROQ from inside the Studio

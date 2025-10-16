@@ -1,4 +1,20 @@
+@font-face {
+  font-family: 'Geogrotesque';
+  src: url('/fonts/GeogrotesqueCompTRIAL-SmBd.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Superclarendon';
+  src: url('/fonts/Superclarendon-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root {
+  --font-geogrotesque: 'Geogrotesque', sans-serif;
+  --font-superclarendon: 'Superclarendon', serif;
   --background: #ffffff;
   --foreground: #171717;
 }

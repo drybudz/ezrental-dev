@@ -1,3 +1,8 @@
+import homepage from './homepage-schema';
 export const schema = {
-  types: [],
+  types: [
+    homepage,
+  ],
 }
+
+export default schema
