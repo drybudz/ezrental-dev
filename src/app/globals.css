@@ -1,3 +1,21 @@
+/* 
+ * Color Palette Guide:
+ * Black: #231F20
+ * Light Beige: #E8EAE1  
+ * Orange: #F7550C
+ */
+
+/* 
+ * Responsive Breakpoint Guide:
+ * XS: 0px – 575px (Default CSS / No Query) - Portrait phones
+ * SM: 576px+ @media (min-width: 576px) - Landscape phones, very small tablets
+ * MD: 768px+ @media (min-width: 768px) - Standard tablets (portrait)
+ * LG: 992px+ @media (min-width: 992px) - Laptops and small desktop monitors
+ * XL: 1200px+ @media (min-width: 1200px) - Wide screen laptops and large monitors
+ * Wide Desktop: 1440px+ @media (min-width: 1440px) - Large iMacs or high-resolution laptops
+ * Full HD: 1920px+ @media (min-width: 1920px) - Full HD (1080p) monitors and larger
+ */
+
 @font-face {
   font-family: 'Geogrotesque';
   src: url('/fonts/GeogrotesqueCompTRIAL-SmBd.otf') format('opentype');
@@ -16,13 +34,13 @@
   --font-geogrotesque: 'Geogrotesque', sans-serif;
   --font-superclarendon: 'Superclarendon', serif;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #E8EAE1;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #231F20;
+    --foreground: #E8EAE1;
   }
 }
 
@@ -38,6 +56,20 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-top: 80px; /* Account for fixed navigation */
+}
+
+/* Global Container Classes */
+.container {
+  max-width: 1820px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.content-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 * {

@@ -5,13 +5,17 @@ const homePage = {
   
   groups: [
     {
-      name: 'content',
-      title: 'Page Content',
+      name: 'navigation', 
+      title: 'Global Navigation',
       default: true,
     },
     {
-      name: 'navigation', 
-      title: 'Global Navigation',
+      name: 'content',
+      title: 'Page Content',
+    },
+    {
+      name: 'footer',
+      title: 'Global Footer',
     },
   ],
 
@@ -63,6 +67,24 @@ const homePage = {
     // --- NAVIGATION GROUP -------------------------------------
     // ==========================================================
     {
+      name: 'logo',
+      title: 'Site Logo',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: 'Alternative text for the logo.',
+        },
+      ],
+      description: 'The main logo used in navigation and footer. Links to homepage.',
+      group: 'navigation',
+    },
+    {
       name: 'mainMenu',
       title: 'Main Menu Links',
       type: 'array',
@@ -111,6 +133,110 @@ const homePage = {
       ],
       description: 'Add and manage all main navigation links.',
       group: 'navigation', 
+    },
+
+    // ==========================================================
+    // --- FOOTER GROUP -----------------------------------------
+    // ==========================================================
+    {
+      name: 'footerCoordinates',
+      title: 'Footer Coordinates',
+      type: 'string',
+      description: 'Geographic coordinates displayed in the orange footer bar (left side).',
+      group: 'footer',
+    },
+    {
+      name: 'footerCoordinatesLink',
+      title: 'Coordinates Link (Optional)',
+      type: 'url',
+      description: 'Optional link for the coordinates (e.g., Google Maps link).',
+      group: 'footer',
+    },
+    {
+      name: 'footerPhone',
+      title: 'Footer Phone Number',
+      type: 'string',
+      description: 'Phone number displayed in the orange footer bar (right side).',
+      group: 'footer',
+    },
+    {
+      name: 'footerSocialMedia',
+      title: 'Social Media Links',
+      type: 'array',
+      of: [
+        {
+          name: 'socialItem',
+          title: 'Social Media Item',
+          type: 'object',
+          fields: [
+            {
+              name: 'platform',
+              title: 'Platform',
+              type: 'string',
+              description: 'Social media platform (e.g., "Instagram", "Facebook").',
+              validation: Rule => Rule.required(),
+            },
+            {
+              name: 'url',
+              title: 'Social Media URL',
+              type: 'url',
+              description: 'Link to the social media profile.',
+              validation: Rule => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'platform',
+              subtitle: 'url',
+            },
+          },
+        },
+      ],
+      description: 'Social media links. No limit - will stack vertically when more than 2.',
+      group: 'footer',
+    },
+    {
+      name: 'footerEmail',
+      title: 'Footer Email',
+      type: 'email',
+      description: 'Email address displayed in the footer.',
+      group: 'footer',
+    },
+    {
+      name: 'footerAdditionalLinks',
+      title: 'Company Information',
+      type: 'array',
+      of: [
+        {
+          name: 'additionalItem',
+          title: 'Company Info Item',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              title: 'Text',
+              type: 'string',
+              description: 'Company name or license number.',
+              validation: Rule => Rule.required(),
+            },
+            {
+              name: 'url',
+              title: 'Link URL (Optional)',
+              type: 'url',
+              description: 'Optional link for this item.',
+            },
+          ],
+          preview: {
+            select: {
+              title: 'text',
+              subtitle: 'url',
+            },
+          },
+        },
+      ],
+      description: 'Company name and license number. Maximum 2 items.',
+      validation: Rule => Rule.max(2),
+      group: 'footer',
     },
     
 

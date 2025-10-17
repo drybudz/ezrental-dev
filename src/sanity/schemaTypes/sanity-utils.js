@@ -23,10 +23,34 @@ export async function getAllEZRentalData() {
           centeredDescription,
           
           // Navigation
+          logo{
+            asset->{
+              url,
+              metadata {
+                dimensions,
+                lqip
+              }
+            },
+            alt
+          },
           mainMenu[]{
             linkText,
             linkUrl,
             linkTarget
+          },
+          
+          // Footer
+          footerCoordinates,
+          footerCoordinatesLink,
+          footerPhone,
+          footerSocialMedia[]{
+            platform,
+            url
+          },
+          footerEmail,
+          footerAdditionalLinks[]{
+            text,
+            url
           }
         }
       }`

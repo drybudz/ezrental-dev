@@ -25,16 +25,48 @@
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 0 2rem;
+  padding: 0 32px;
+  max-width: 1028px;
 }
 
 .heroText {
-  color: white;
-  font-size: clamp(2rem, 5vw, 4rem);
+  color: #E8EAE1;
+  font-size: 64px;
   font-family: var(--font-geogrotesque), sans-serif;
   font-weight: 600;
   text-transform: uppercase;
-  line-height: 1.2;
+  line-height: 90%;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   margin: 0;
+}
+
+/* Responsive font sizes using media queries - 50% minimum */
+@media (max-width: 1200px) {
+  .heroText {
+    font-size: 58px;
+  }
+}
+
+@media (max-width: 992px) {
+  .heroText {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroText {
+    font-size: 46px;
+  }
+}
+
+@media (max-width: 576px) {
+  .heroText {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroText {
+    font-size: 45px;
+  }
 }

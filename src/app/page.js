@@ -3,6 +3,7 @@
 import { useAppContext } from "./components/AppContext";
 import HeroBanner from "./components/sections/HeroBanner";
 import CenteredOrangeContent from "./components/sections/CenteredOrangeContent";
+import Footer from "./components/sections/Footer";
 
 export default function Home() {
   const context = useAppContext();
@@ -28,6 +29,9 @@ export default function Home() {
         centeredTitle={homePageData?.centeredTitle}
         centeredDescription={homePageData?.centeredDescription}
       />
+      
+      {/* Footer Section */}
+      <Footer footerData={homePageData} />
     </div>
   );
 }

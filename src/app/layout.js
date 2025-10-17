@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "./components/AppContext";
 import { getAllEZRentalData } from "../sanity/schemaTypes/sanity-utils";
+import Navigation from "./components/sections/Navigation";
 
 export const metadata = {
   title: "EZ Rental Website",
@@ -15,7 +16,8 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body>
         <AppProvider initialData={initialData}>
-           {children}
+          <Navigation navigationData={initialData?.homePage} />
+          {children}
         </AppProvider>
       </body>
     </html>
