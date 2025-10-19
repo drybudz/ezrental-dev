@@ -3,6 +3,7 @@
 import { useAppContext } from "./components/AppContext";
 import HeroBanner from "./components/sections/HeroBanner";
 import CenteredOrangeContent from "./components/sections/CenteredOrangeContent";
+import HorizontalShowcase from "./components/sections/HorizontalShowcase";
 import Footer from "./components/sections/Footer";
 
 export default function Home() {
@@ -28,6 +29,11 @@ export default function Home() {
       <CenteredOrangeContent
         centeredTitle={homePageData?.centeredTitle}
         centeredDescription={homePageData?.centeredDescription}
+      />
+
+      {/* Horizontal Showcase Section */}
+      <HorizontalShowcase
+        horizontalShowcase={homePageData?.horizontalShowcase}
       />
       
       {/* Footer Section */}

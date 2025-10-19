@@ -22,6 +22,25 @@ export async function getAllEZRentalData() {
           centeredTitle,
           centeredDescription,
           
+          // Horizontal Showcase Section
+          horizontalShowcase{
+            title,
+            items[]{
+              image{
+                asset->{
+                  url,
+                  metadata {
+                    dimensions,
+                    lqip
+                  }
+                },
+                alt
+              },
+              title,
+              description
+            }
+          },
+          
           // Navigation
           logo{
             asset->{

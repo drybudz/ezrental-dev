@@ -63,6 +63,92 @@ const homePage = {
       group: 'content',
     },
 
+    // --- Horizontal Showcase Section ---
+    {
+      name: 'horizontalShowcase',
+      title: 'Horizontal Showcase',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          title: 'Section Title',
+          type: 'string',
+          description: 'Optional title for the entire showcase section.',
+        },
+        {
+          name: 'items',
+          title: 'Showcase Items',
+          type: 'array',
+          of: [
+            {
+              name: 'horizontalShowcaseItem',
+              title: 'Showcase Item',
+              type: 'object',
+              fields: [
+                {
+                  name: 'image',
+                  title: 'Image',
+                  type: 'image',
+                  options: {
+                    hotspot: true,
+                  },
+                  fields: [
+                    {
+                      name: 'alt',
+                      title: 'Alt Text',
+                      type: 'string',
+                      description: 'Alternative text for the image.',
+                    },
+                  ],
+                  description: 'Image for the showcase item. Suggested ratio: 480x684.',
+                  validation: Rule => Rule.required(),
+                },
+                {
+                  name: 'title',
+                  title: 'Title',
+                  type: 'string',
+                  description: 'Title for the showcase item (Geogrotesque Cond, 45px, line height 90%).',
+                  validation: Rule => Rule.required().max(50),
+                },
+                {
+                  name: 'description',
+                  title: 'Short Description',
+                  type: 'string',
+                  description: 'Short description (Superclarendon, 25px, letter spacing -0.32px, max of 7 words).',
+                  validation: Rule => Rule.required().max(50),
+                },
+              ],
+              preview: {
+                select: {
+                  title: 'title',
+                  subtitle: 'description',
+                  media: 'image',
+                },
+              },
+            },
+          ],
+          description: 'Add showcase items. Maximum 3 items recommended.',
+          validation: Rule => Rule.max(3),
+        },
+      ],
+      preview: {
+        select: {
+          title: 'title',
+          subtitle: 'items',
+        },
+        prepare(selection) {
+          const { title, subtitle } = selection;
+          const itemCount = subtitle ? subtitle.length : 0;
+          return {
+            title: title || 'Horizontal Showcase',
+            subtitle: `${itemCount} item${itemCount !== 1 ? 's' : ''}`,
+          };
+        },
+      },
+      description: 'Horizontal showcase section with up to 3 items. Displays as grid on desktop, slider on mobile.',
+      group: 'content',
+    },
+
     // ==========================================================
     // --- NAVIGATION GROUP -------------------------------------
     // ==========================================================
