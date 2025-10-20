@@ -9,7 +9,7 @@ export default {
     {
       name: 'heroText',
       title: 'Hero Text',
-      type: 'string',
+      type: 'text',
       group: 'content'
     },
     {

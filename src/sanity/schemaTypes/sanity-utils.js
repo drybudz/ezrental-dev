@@ -102,6 +102,19 @@ export async function getAllEZRentalData() {
             },
             alt
           }
+        },
+        "servicesPage": *[_type == "servicesPage"][0]{
+          heroText,
+          heroImage{
+            asset->{
+              url,
+              metadata {
+                dimensions,
+                lqip
+              }
+            },
+            alt
+          }
         }
       }`
     );
