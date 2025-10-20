@@ -22,11 +22,11 @@
   font-family: var(--font-geogrotesque), sans-serif;
   font-weight: 600;
   font-size: 60px;
-  color: #333;
+  color: #231F20;
 }
 
 .coordinatesLink {
-  color: #333;
+  color: #231F20;
   text-decoration: none;
 }
 
@@ -38,11 +38,11 @@
   font-family: var(--font-superclarendon), serif;
   font-weight: 400;
   font-size: 60px;
-  color: #333;
+  color: #231F20;
 }
 
 .phoneLink {
-  color: #333;
+  color: #231F20;
   text-decoration: none;
 }
 
