@@ -4,6 +4,7 @@ import { useAppContext } from "./components/AppContext";
 import HeroBannerGSAP from "./components/sections/HeroBannerGSAP";
 import CenteredOrangeContentGSAP from "./components/sections/CenteredOrangeContentGSAP";
 import HorizontalShowcaseGSAP from "./components/sections/HorizontalShowcaseGSAP";
+import Methodology from "./components/sections/Methodology";
 import Footer from "./components/sections/Footer";
 
 export default function Home() {
@@ -35,6 +36,9 @@ export default function Home() {
       <HorizontalShowcaseGSAP
         horizontalShowcase={homePageData?.horizontalShowcase}
       />
+
+      {/* Methodology Section */}
+      <Methodology methodology={homePageData?.methodology} />
       
       {/* Footer Section */}
       <Footer footerData={homePageData} />

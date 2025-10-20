@@ -149,6 +149,81 @@ const homePage = {
       group: 'content',
     },
 
+    // --- Methodology Section ---
+    {
+      name: 'methodology',
+      title: 'Methodology',
+      type: 'object',
+      fields: [
+        {
+          name: 'image',
+          title: 'Methodology Image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+              description: 'Alternative text for the image.',
+            },
+          ],
+          description: 'Optional image for methodology section. Suggested ratio: 1440x800.',
+        },
+        {
+          name: 'steps',
+          title: 'Methodology Steps',
+          type: 'array',
+          of: [
+            {
+              name: 'methodologyStep',
+              title: 'Methodology Step',
+              type: 'object',
+              fields: [
+                {
+                  name: 'counter',
+                  title: 'Counter',
+                  type: 'string',
+                  description: 'Step counter (e.g., "01", "02"). Maximum 2 characters.',
+                  validation: Rule => Rule.required().max(2),
+                },
+                {
+                  name: 'description',
+                  title: 'Description',
+                  type: 'text',
+                  description: 'Step description. Maximum 47 characters.',
+                  validation: Rule => Rule.required().max(47),
+                },
+              ],
+              preview: {
+                select: {
+                  title: 'counter',
+                  subtitle: 'description',
+                },
+              },
+            },
+          ],
+          description: 'Add methodology steps. Each step has a counter and description.',
+        },
+      ],
+      preview: {
+        select: {
+          title: 'steps',
+        },
+        prepare(selection) {
+          const steps = selection.title || [];
+          return {
+            title: 'Methodology',
+            subtitle: `${steps.length} step${steps.length !== 1 ? 's' : ''}`,
+          };
+        },
+      },
+      description: 'Methodology section with optional image and step-by-step process.',
+      group: 'content',
+    },
+
     // ==========================================================
     // --- NAVIGATION GROUP -------------------------------------
     // ==========================================================

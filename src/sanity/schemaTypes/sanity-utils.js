@@ -41,6 +41,24 @@ export async function getAllEZRentalData() {
             }
           },
           
+          // Methodology Section
+          methodology{
+            image{
+              asset->{
+                url,
+                metadata {
+                  dimensions,
+                  lqip
+                }
+              },
+              alt
+            },
+            steps[]{
+              counter,
+              description
+            }
+          },
+          
           // Navigation
           logo{
             asset->{
