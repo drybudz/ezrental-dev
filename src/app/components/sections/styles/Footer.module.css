@@ -49,7 +49,7 @@
 /* Black Bar */
 .blackBar {
   background-color: #231F20;
-  padding: 64px 32px 32px 32px;
+  padding: 84px 32px 32px 32px;
 }
 
 .blackBarContent {
@@ -116,7 +116,7 @@
 .socialLink {
   font-family: var(--font-geogrotesque), sans-serif;
   font-weight: 600;
-  font-size: 26px;
+  font-size: 20px;
   color: #E8EAE1;
   text-decoration: none;
   text-transform: uppercase;
@@ -144,7 +144,7 @@
 .emailLink {
   font-family: var(--font-geogrotesque), sans-serif;
   font-weight: 600;
-  font-size: 26px;
+  font-size: 20px;
   color: #E8EAE1;
   text-decoration: none;
 }
@@ -171,7 +171,7 @@
 .additionalLink {
   font-family: var(--font-geogrotesque), sans-serif;
   font-weight: 600;
-  font-size: 26px;
+  font-size: 20px;
   color: #E8EAE1;
   text-decoration: none;
 }
@@ -183,7 +183,7 @@
 .additionalText {
   font-family: var(--font-geogrotesque), sans-serif;
   font-weight: 600;
-  font-size: 26px;
+  font-size: 20px;
   color: #E8EAE1;
 }
 

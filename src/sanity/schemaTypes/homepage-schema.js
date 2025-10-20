@@ -51,7 +51,7 @@ const homePage = {
     {
       name: 'centeredTitle',
       title: 'Orange Centered Title',
-      type: 'string',
+      type: 'text',
       description: 'The main title for the centered section.',
       group: 'content',
     },

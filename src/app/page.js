@@ -1,9 +1,9 @@
 'use client';
 
 import { useAppContext } from "./components/AppContext";
-import HeroBanner from "./components/sections/HeroBanner";
-import CenteredOrangeContent from "./components/sections/CenteredOrangeContent";
-import HorizontalShowcase from "./components/sections/HorizontalShowcase";
+import HeroBannerGSAP from "./components/sections/HeroBannerGSAP";
+import CenteredOrangeContentGSAP from "./components/sections/CenteredOrangeContentGSAP";
+import HorizontalShowcaseGSAP from "./components/sections/HorizontalShowcaseGSAP";
 import Footer from "./components/sections/Footer";
 
 export default function Home() {
@@ -20,19 +20,19 @@ export default function Home() {
   return (
     <div className="homePage">
       {/* Hero Banner Section */}
-      <HeroBanner
+      <HeroBannerGSAP
         heroText={homePageData?.heroText}
         heroImage={homePageData?.heroImage}
       />
 
       {/* Centered Orange Content Section */}
-      <CenteredOrangeContent
+      <CenteredOrangeContentGSAP
         centeredTitle={homePageData?.centeredTitle}
         centeredDescription={homePageData?.centeredDescription}
       />
 
       {/* Horizontal Showcase Section */}
-      <HorizontalShowcase
+      <HorizontalShowcaseGSAP
         horizontalShowcase={homePageData?.horizontalShowcase}
       />
       

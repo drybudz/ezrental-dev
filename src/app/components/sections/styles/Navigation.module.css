@@ -1,11 +1,11 @@
 .navigation {
-  position: fixed;
+  position: absolute; /* overlay hero, not sticky */
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: rgba(35, 31, 32, 0.95);
-  backdrop-filter: blur(10px);
+  background-color: transparent; /* allow hero under nav */
+  backdrop-filter: none;
   padding: 16px 32px;
 }
 
@@ -40,6 +40,7 @@
   font-size: 19px;
   color: #E8EAE1;
   text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 /* Menu */
@@ -59,11 +60,13 @@
   transition: all 0.3s ease;
   padding: 8px 16px;
   border-radius: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 .menuLink:hover {
   color: #231F20;
   background-color: #E8EAE1;
+  text-shadow: none; /* Remove shadow on hover for better contrast */
 }
 
 /* Hamburger Menu */
@@ -85,7 +88,7 @@
 
 /* Hamburger to X Animation - Symmetrical */
 .hamburger.active .hamburgerLine:nth-child(1) {
-  transform: rotate(45deg) translate(6px, 6px);
+  transform: rotate(45deg) translate(6px, 7px);
 }
 
 .hamburger.active .hamburgerLine:nth-child(2) {
@@ -93,16 +96,16 @@
 }
 
 .hamburger.active .hamburgerLine:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
+  transform: rotate(-45deg) translate(6px, -7px);
 }
 
 /* Modal Overlay - Don't cover navigation bar */
 .modalOverlay {
   position: fixed;
-  top: 80px; /* Start below navigation bar */
+  top: 0; /* cover entire screen */
   left: 0;
   width: 100%;
-  height: calc(100% - 80px); /* Height minus navigation bar */
+  height: 100%;
   background-color: rgba(35, 31, 32, 0.95);
   z-index: 10001; /* Lower than hamburger */
   display: none;

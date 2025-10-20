@@ -1,73 +1,78 @@
 .heroBanner {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .backgroundImage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 .heroImage {
-  object-fit: cover;
+    object-fit: cover;
 }
 
 .textOverlay {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 0 32px;
-  max-width: 1028px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 32px;
+    max-width: 1028px;
 }
 
 .heroText {
-  color: #E8EAE1;
-  font-size: 64px;
-  font-family: var(--font-geogrotesque), sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  line-height: 90%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  margin: 0;
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    color: #E8EAE1;
+    font-size: 64px;
+    font-family: var(--font-geogrotesque), sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 90%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    margin: 0;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    /* To match line breaks from Sanity's Studio */
+    white-space: pre-wrap;
+    text-wrap: balance;
 }
 
 /* Responsive font sizes using media queries - 50% minimum */
 @media (max-width: 1200px) {
-  .heroText {
-    font-size: 58px;
-  }
+    .heroText {
+        font-size: 58px;
+    }
 }
 
 @media (max-width: 992px) {
-  .heroText {
-    font-size: 52px;
-  }
+    .heroText {
+        font-size: 52px;
+    }
 }
 
 @media (max-width: 768px) {
-  .heroText {
-    font-size: 46px;
-  }
+    .heroText {
+        font-size: 46px;
+        white-space: normal; /* override pre-wrap on small screens */
+        text-wrap: wrap;     /* override balance */
+    }
 }
 
 @media (max-width: 576px) {
-  .heroText {
-    font-size: 40px;
-  }
+    .heroText {
+        font-size: 40px;
+    }
 }
 
 @media (max-width: 480px) {
-  .heroText {
-    font-size: 45px;
-  }
+    .heroText {
+        font-size: 45px;
+    }
 }

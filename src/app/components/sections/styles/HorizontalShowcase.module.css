@@ -47,16 +47,14 @@
   position: relative;
 }
 
+
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
 }
 
-.showcaseItem:hover .image {
-  transform: scale(1.05);
-}
+
 
 .content {
   position: absolute;
@@ -78,7 +76,7 @@
   line-height: 90%;
   color: #E8EAE1;
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
   text-transform: uppercase;
 
 }
@@ -90,15 +88,11 @@
   line-height: 1.4;
   color: #E8EAE1;
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
-/* Mobile Styles - Changed breakpoint to 992px */
-@media (max-width: 992px) {
-  /* .horizontalShowcase {
-    padding: 60px 0;
-  } */
-
+/* Mobile Styles - stack items and rotate image ratio */
+@media (max-width: 768px) {
   .container {
     padding: 0;
   }
@@ -110,40 +104,54 @@
 
   .showcaseGrid {
     display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    /* padding-bottom: 20px; */
-    cursor: grab;
-    scroll-behavior: smooth;
-  }
-
-  .showcaseGrid::-webkit-scrollbar {
-    display: none;
-  }
-
-  .showcaseGrid:active {
-    cursor: grabbing;
+    flex-direction: column;
+    gap: 0;
+    overflow: visible;
+    scroll-snap-type: none;
   }
 
   .showcaseItem {
-    flex: 0 0 100vw;
-    scroll-snap-align: start;
-    min-width: 100vw;
+    min-width: auto;
+    /* margin-bottom: 20px; */
+    position: relative;
+  }
+
+  /* No opacity/translate animations; only height changes */
+
+  .imageContainer {
+    width: 100%;
+    /* aspect-ratio: 684 / 240;  -- reference only */
+    height: 240px; /* start height */
+    overflow: hidden;
+    position: relative;
+    transition: height 0.9s cubic-bezier(0.22, 1, 0.36, 1); /* slower & smoother */
+    will-change: height;
+    /* margin-bottom: 16px; */
+  }
+
+  /* When item is mostly in view, expand height to 480 */
+  .expanded .imageContainer {
+    height: 480px;
   }
 
   .content {
-    padding: 20px;
+    padding: 30px;
   }
 
   /* Typography adjustments for mobile - 30% smaller */
   .title {
-    font-size: 31.5px; /* 45px * 0.7 = 31.5px */
+    font-size: 31.5px; /* 45 * 0.7 */
   }
 
   .description {
-    font-size: 17.5px; /* 25px * 0.7 = 17.5px */
+    font-size: 17.5px; /* 25 * 0.7 */
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .imageContainer {
+    transition: height 0s linear !important;
   }
 }
 

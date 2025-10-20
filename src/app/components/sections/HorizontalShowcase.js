@@ -1,164 +1,51 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import styles from './styles/HorizontalShowcase.module.css';
 
 export default function HorizontalShowcase({ horizontalShowcase }) {
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const sliderRef = useRef(null);
-  const autoSlideRef = useRef(null);
-  const isUserInteracting = useRef(false);
-
   if (!horizontalShowcase || !horizontalShowcase.items || horizontalShowcase.items.length === 0) {
     return null;
   }
 
   const items = horizontalShowcase.items;
+  const itemRefs = useRef([]);
 
-  // Auto-slide functionality - only starts after user inactivity
-  const startAutoSlide = () => {
-    if (window.innerWidth <= 992 && items.length > 1) {
-      autoSlideRef.current = setInterval(() => {
-        if (sliderRef.current && !isUserInteracting.current) {
-          setCurrentIndex((prevIndex) => {
-            // Option 2: Stop at the last item, don't restart
-            if (prevIndex < items.length - 1) {
-              const nextIndex = prevIndex + 1;
-              sliderRef.current.scrollTo({
-                left: nextIndex * window.innerWidth,
-                behavior: 'smooth'
-              });
-              return nextIndex;
-            } else {
-              // At the end, stop auto-sliding
-              if (autoSlideRef.current) {
-                clearInterval(autoSlideRef.current);
-                autoSlideRef.current = null;
-              }
-              return prevIndex; // Stay at the last item
-            }
-          });
-        }
-      }, 4000); // Auto-slide every 4 seconds
-    }
-  };
-
-  const goToSlide = (index) => {
-    if (sliderRef.current && index >= 0 && index < items.length) {
-      sliderRef.current.scrollTo({
-        left: index * window.innerWidth,
-        behavior: 'smooth'
-      });
-      setCurrentIndex(index);
-    }
-  };
-
-  const nextSlide = () => {
-    // Option 2: Proper bounds checking - stop at the last item
-    if (currentIndex < items.length - 1) {
-      goToSlide(currentIndex + 1);
-    }
-  };
-
-  const prevSlide = () => {
-    // Option 2: Proper bounds checking - stop at the first item
-    if (currentIndex > 0) {
-      goToSlide(currentIndex - 1);
-    }
-  };
-
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    isUserInteracting.current = true;
-    setStartX(e.pageX - sliderRef.current.offsetLeft);
-    setScrollLeft(sliderRef.current.scrollLeft);
-    if (autoSlideRef.current) {
-      clearInterval(autoSlideRef.current);
-      autoSlideRef.current = null;
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-    isUserInteracting.current = false;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    isUserInteracting.current = false;
-    // Start auto-slide after 10 seconds of inactivity
-    setTimeout(() => {
-      startAutoSlide();
-    }, 10000); // Wait 10 seconds before starting auto-slide
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - sliderRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    sliderRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchStart = (e) => {
-    setIsDragging(true);
-    isUserInteracting.current = true;
-    setStartX(e.touches[0].pageX - sliderRef.current.offsetLeft);
-    setScrollLeft(sliderRef.current.scrollLeft);
-    if (autoSlideRef.current) {
-      clearInterval(autoSlideRef.current);
-      autoSlideRef.current = null;
-    }
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    const x = e.touches[0].pageX - sliderRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    sliderRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    isUserInteracting.current = false;
-    
-    // Determine which slide we should snap to based on scroll position
-    if (sliderRef.current) {
-      const slideWidth = window.innerWidth;
-      const scrollPosition = sliderRef.current.scrollLeft;
-      const newIndex = Math.round(scrollPosition / slideWidth);
-      // Ensure we don't go beyond bounds
-      const clampedIndex = Math.max(0, Math.min(newIndex, items.length - 1));
-      setCurrentIndex(clampedIndex);
-    }
-    
-    // Start auto-slide after 10 seconds of inactivity
-    setTimeout(() => {
-      startAutoSlide();
-    }, 10000); // Wait 10 seconds before starting auto-slide
-  };
-
-  // Handle swipe gestures
-  const handleWheel = (e) => {
-    if (window.innerWidth <= 992) {
-      e.preventDefault();
-      if (e.deltaX > 0) {
-        nextSlide(); // Swipe right
-      } else if (e.deltaX < 0) {
-        prevSlide(); // Swipe left
-      }
-    }
-  };
-
-  // Cleanup on unmount
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const viewportH = window.innerHeight || document.documentElement.clientHeight;
+        const collapsedHeight = 280; // Fixed for projected calculations (from CSS)
+
+        entries.forEach((entry) => {
+          const el = entry.target;
+          const rect = entry.boundingClientRect;
+          const isCurrentlyExpanded = el.classList.contains(styles.expanded);
+
+          // Expand: project center using collapsed height, trigger when it reaches 85% of viewport (earlier trigger in lower half)
+          const projectedCenter = rect.top + (collapsedHeight / 2);
+          const triggerPoint = viewportH * 0.85;
+          const shouldExpand = projectedCenter <= triggerPoint && !isCurrentlyExpanded;
+
+          // Collapse: when current state is out of viewport by 100px (keeps expanded visible longer)
+          const outOfView = rect.bottom < -100 || rect.top > viewportH + 100;
+
+          if (outOfView) {
+            el.classList.remove(styles.expanded);
+          } else if (shouldExpand) {
+            el.classList.add(styles.expanded);
+          }
+          // Stay expanded if partially in view and not out
+        });
+      },
+      { threshold: [0, 1], rootMargin: '0px' }
+    );
+
+    itemRefs.current.forEach((el) => el && observer.observe(el));
+
     return () => {
-      if (autoSlideRef.current) {
-        clearInterval(autoSlideRef.current);
-      }
+      itemRefs.current.forEach((el) => el && observer.unobserve(el));
+      observer.disconnect();
     };
   }, []);
 
@@ -170,20 +57,13 @@ export default function HorizontalShowcase({ horizontalShowcase }) {
         )}
         
         <div className={styles.showcaseWrapper}>
-          <div 
-            className={styles.showcaseGrid}
-            ref={sliderRef}
-            onMouseDown={handleMouseDown}
-            onMouseLeave={handleMouseLeave}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onWheel={handleWheel}
-          >
+          <div className={styles.showcaseGrid}>
             {items.map((item, index) => (
-              <div key={index} className={styles.showcaseItem}>
+              <div
+                key={index}
+                className={styles.showcaseItem}
+                ref={(el) => (itemRefs.current[index] = el)}
+              >
                 <div className={styles.imageContainer}>
                   <Image
                     src={item.image?.asset?.url || '/placeholder.jpg'}

@@ -2,10 +2,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import styles from './styles/Navigation.module.css';
 
 export default function Navigation({ navigationData }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Hide navigation on Studio/Admin routes
+  if (pathname && (pathname.startsWith('/admin') || pathname.startsWith('/studio'))) {
+    return null;
+  }
 
   if (!navigationData) return null;
 
