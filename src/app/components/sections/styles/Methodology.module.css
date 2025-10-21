@@ -12,7 +12,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 600px;
+  min-height: 800px;
   max-width: 100%;
   margin: 0 auto;
 }
@@ -59,6 +59,8 @@
   color: #231F20;
   max-width: 100%;
   text-transform: uppercase;
+  white-space: pre-wrap;
+  text-wrap: balance;
 }
 
 /* Turn off parallax scrolling for mobile */
@@ -90,6 +92,8 @@
     font-size: 40px; /* Keep same size as desktop */
     line-height: 90%; /* Keep same line height as desktop */
     text-transform: uppercase; /* Keep same transform as desktop */
+    white-space: normal; /* Override pre-wrap on mobile */
+    text-wrap: wrap; /* Override balance on mobile */
   }
 }
 
@@ -115,5 +119,7 @@
     font-size: 40px; /* Keep same size as desktop */
     line-height: 90%; /* Keep same line height as desktop */
     text-transform: uppercase; /* Keep same transform as desktop */
+    white-space: normal; /* Override pre-wrap on mobile */
+    text-wrap: wrap; /* Override balance on mobile */
   }
 }
