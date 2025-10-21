@@ -79,7 +79,6 @@
   line-height: 90%;
   color: #E8EAE1;
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
   text-transform: uppercase;
 
 }
@@ -91,7 +90,6 @@
   line-height: 1.4;
   color: #E8EAE1;
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 /* Desktop hover effect - expand image on hover */

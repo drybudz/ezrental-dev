@@ -40,7 +40,6 @@
   font-size: 19px;
   color: #E8EAE1;
   text-transform: uppercase;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 /* Menu */
@@ -60,13 +59,11 @@
   transition: all 0.3s ease;
   padding: 8px 16px;
   border-radius: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 .menuLink:hover {
   color: #231F20;
   background-color: #E8EAE1;
-  text-shadow: none; /* Remove shadow on hover for better contrast */
 }
 
 /* Hamburger Menu */
