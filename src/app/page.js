@@ -5,6 +5,7 @@ import HeroBannerGSAP from "./components/sections/HeroBannerGSAP";
 import CenteredOrangeContentGSAP from "./components/sections/CenteredOrangeContentGSAP";
 import HorizontalShowcaseGSAP from "./components/sections/HorizontalShowcaseGSAP";
 import Methodology from "./components/sections/Methodology";
+import FiftyContact from "./components/sections/FiftyContact";
 import Footer from "./components/sections/Footer";
 
 export default function Home() {
@@ -39,6 +40,9 @@ export default function Home() {
 
       {/* Methodology Section */}
       <Methodology methodology={homePageData?.methodology} />
+      
+      {/* 50Contact Section */}
+      <FiftyContact fiftyContact={homePageData?.fiftyContact} />
       
       {/* Footer Section */}
       <Footer footerData={homePageData} />

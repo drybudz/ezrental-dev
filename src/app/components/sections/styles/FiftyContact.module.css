@@ -1,0 +1,139 @@
+.fiftyContact {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Left Column - Image (exactly 50%) */
+.imageColumn {
+  width: 50%; /* Force exact 50% */
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* Right Column - Content (exactly 50%) */
+.contentColumn {
+  width: 50%; /* Force exact 50% */
+  background-color: #231F20;
+  color: #E8EAE1;
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Title */
+.title {
+  font-family: var(--font-geogrotesque), sans-serif;
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 90%;
+  color: #E8EAE1;
+  margin: 0;
+  text-transform: uppercase;
+  white-space: pre-wrap;
+  text-wrap: balance;
+}
+
+/* Bottom Content Container */
+.bottomContent {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Description */
+.description {
+  font-family: var(--font-superclarendon), sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 118%;
+  color: #E8EAE1;
+  margin: 0;
+  letter-spacing: -0.64px;
+  white-space: pre-wrap;
+  text-wrap: balance;
+}
+
+/* CTA Button */
+.ctaButton {
+  display: inline-block;
+  padding: 7px 50px;
+  background-color: #231F20;
+  color: #E8EAE1;
+  border: 1px solid #E8EAE1;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: var(--font-geogrotesque), sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  letter-spacing: 0.96px;
+}
+
+.ctaButton:hover {
+  background-color: #E8EAE1;
+  color: #231F20;
+  border: 1px solid #E8EAE1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fiftyContact {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .imageColumn {
+    width: auto; /* Reset to auto for mobile */
+    flex: 1; /* Use flexbox for mobile */
+    height: 50vh;
+    min-height: 300px;
+  }
+
+  .contentColumn {
+    width: auto; /* Reset to auto for mobile */
+    flex: 1; /* Use flexbox for mobile */
+    padding: 60px 40px;
+    min-height: 70vh;
+  }
+
+  .title {
+    font-size: 48px;
+    white-space: normal;
+    text-wrap: wrap;
+  }
+
+  .description {
+    font-size: 18px;
+    white-space: normal;
+    text-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentColumn {
+    padding: 40px 20px 65px 20px;
+  }
+
+  .title {
+    font-size: 40px;
+  }
+
+  .description {
+    font-size: 17.5px;
+  }
+
+  .ctaButton {
+    padding: 14px 28px;
+    font-size: 20px;
+  }
+}

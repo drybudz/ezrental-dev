@@ -59,6 +59,27 @@ export async function getAllEZRentalData() {
             }
           },
           
+          // 50Contact Section
+          fiftyContact{
+            image{
+              asset->{
+                url,
+                metadata {
+                  dimensions,
+                  lqip
+                }
+              },
+              alt
+            },
+            title,
+            description,
+            cta{
+              text,
+              url,
+              target
+            }
+          },
+          
           // Navigation
           logo{
             asset->{

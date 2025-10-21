@@ -224,6 +224,84 @@ const homePage = {
       group: 'content',
     },
 
+    // --- 50Contact Section ---
+    {
+      name: 'fiftyContact',
+      title: '50Contact',
+      type: 'object',
+      fields: [
+        {
+          name: 'image',
+          title: 'Contact Image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+              description: 'Alternative text for the image.',
+            },
+          ],
+          description: 'Image for the left side of the contact section.',
+        },
+        {
+          name: 'title',
+          title: 'Contact Title',
+          type: 'text',
+          description: 'Main title for the contact section.',
+        },
+        {
+          name: 'description',
+          title: 'Contact Description',
+          type: 'text',
+          description: 'Description text for the contact section.',
+        },
+        {
+          name: 'cta',
+          title: 'Call to Action',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              title: 'CTA Text',
+              type: 'string',
+              description: 'Text for the call-to-action button.',
+            },
+            {
+              name: 'url',
+              title: 'CTA URL',
+              type: 'string',
+              description: 'URL for the call-to-action button.',
+            },
+            {
+              name: 'target',
+              title: 'Link Target',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Same Tab', value: '_self' },
+                  { title: 'New Tab', value: '_blank' },
+                ],
+              },
+              description: 'Whether the link opens in the same tab or a new tab.',
+            },
+          ],
+          description: 'Call-to-action button configuration.',
+        },
+      ],
+      preview: {
+        select: {
+          title: 'title',
+          subtitle: 'description',
+        },
+      },
+      description: '50/50 contact section with image and content.',
+      group: 'content',
+    },
+
     // ==========================================================
     // --- NAVIGATION GROUP -------------------------------------
     // ==========================================================
