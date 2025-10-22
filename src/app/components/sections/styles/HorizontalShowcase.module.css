@@ -137,7 +137,7 @@
   .imageContainer {
     width: 100%;
     /* aspect-ratio: 684 / 240;  -- reference only */
-    height: 240px; /* start height */
+    height: 420px; /* start height */
     overflow: hidden;
     position: relative;
     transition: height 0.9s cubic-bezier(0.22, 1, 0.36, 1); /* slower & smoother */

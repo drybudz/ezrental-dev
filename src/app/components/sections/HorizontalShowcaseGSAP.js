@@ -24,52 +24,78 @@ export default function HorizontalShowcaseGSAP({ horizontalShowcase }) {
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      itemsRef.current.forEach((itemEl, index) => {
-        if (!itemEl) return;
-
-        const imageContainer = itemEl.querySelector(`.${styles.imageContainer}`);
-        
-        // Only apply mobile animations if screen is mobile
-        if (window.innerWidth <= 768) {
-          // Set initial state for mobile only
-          gsap.set(imageContainer, { height: 240 });
-
-          // Create ScrollTrigger for each item (mobile only)
-          ScrollTrigger.create({
-            trigger: itemEl,
-            start: "top 80%",
-            end: "bottom 20%",
-            onEnter: () => {
-              gsap.to(imageContainer, {
-                height: 480,
-                duration: 0.8,
-                ease: "power2.out"
-              });
-            },
-            onLeave: () => {
-              gsap.to(imageContainer, {
-                height: 240,
-                duration: 0.6,
-                ease: "power2.inOut"
-              });
-            },
-            onEnterBack: () => {
-              gsap.to(imageContainer, {
-                height: 480,
-                duration: 0.8,
-                ease: "power2.out"
-              });
-            },
-            onLeaveBack: () => {
-              gsap.to(imageContainer, {
-                height: 240,
-                duration: 0.6,
-                ease: "power2.inOut"
-              });
-            }
-          });
-        }
-      });
+      // Only apply mobile animations if screen is mobile
+      if (window.innerWidth <= 768) {
+        // Create individual ScrollTriggers for each item
+        itemsRef.current.forEach((itemEl, index) => {
+          if (itemEl) {
+            const titleEl = itemEl.querySelector(`.${styles.title}`);
+            const descriptionEl = itemEl.querySelector(`.${styles.description}`);
+            
+            // Set initial state - title and description close together
+            gsap.set(titleEl, { 
+              y: 0
+            });
+            gsap.set(descriptionEl, { 
+              y: 0
+            });
+            
+            ScrollTrigger.create({
+              trigger: itemEl,
+              start: "bottom 25%", // Trigger when item is 25% from bottom of screen
+              end: "bottom -100px", // Disappear only when completely out of view
+              onEnter: () => {
+                // Move title down and description up to create space
+                gsap.to(titleEl, {
+                  y: 50, // Move title 50px down
+                  duration: 0.8,
+                  ease: "power2.out",
+                  delay: index * 0.1
+                });
+                
+                gsap.to(descriptionEl, {
+                  y: -50, // Move description 50px up
+                  duration: 0.8,
+                  ease: "power2.out",
+                  delay: index * 0.1
+                });
+              },
+              onLeave: () => {
+                // Move back to original positions when going out of view
+                gsap.to([titleEl, descriptionEl], {
+                  y: 0,
+                  duration: 0.6,
+                  ease: "power2.in"
+                });
+              },
+              onEnterBack: () => {
+                // Move title down and description up when scrolling back up
+                gsap.to(titleEl, {
+                  y: 50,
+                  duration: 0.8,
+                  ease: "power2.out",
+                  delay: index * 0.1
+                });
+                
+                gsap.to(descriptionEl, {
+                  y: -50,
+                  duration: 0.8,
+                  ease: "power2.out",
+                  delay: index * 0.1
+                });
+              },
+              onLeaveBack: () => {
+                // Move back to original positions when scrolling back up and out of view
+                gsap.to([titleEl, descriptionEl], {
+                  y: 0,
+                  duration: 0.6,
+                  ease: "power2.in"
+                });
+              }
+            });
+          }
+        });
+      }
     }, containerRef);
 
     return () => {

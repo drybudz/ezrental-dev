@@ -19,18 +19,22 @@ export default function CenteredOrangeContentGSAP({ centeredTitle, centeredDescr
 
     const ctx = gsap.context(() => {
       // Set initial state
-      gsap.set([titleRef.current, descriptionRef.current], { opacity: 0 });
+      gsap.set([titleRef.current, descriptionRef.current], { 
+        opacity: 0,
+        y: 70 // Start 70px down
+      });
 
-      // Create fade-in animation for title and description
+      // Create parallax animation with upward movement
       gsap.to([titleRef.current, descriptionRef.current], {
         opacity: 1,
+        y: 0, // Move up to original position
         duration: 1.2,
         ease: "power2.out",
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 80%",
           end: "bottom 20%",
-          scrub: 1, // Smooth scrubbing
+          scrub: 1, // Smooth scrubbing for parallax effect
         }
       });
     }, containerRef);
