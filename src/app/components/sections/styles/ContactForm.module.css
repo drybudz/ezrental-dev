@@ -24,10 +24,10 @@
 }
 
 .typesColumn {
-    width: 50%;
+    width: 70%;
     display: flex;
     justify-content: flex-end;
-    padding-right: 70px;
+    margin-right: 70px;
 }
 
 .title {
@@ -45,11 +45,11 @@
 .typesGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 10px;
 }
 
 .typeButton {
-    padding: 12px 32px;
+    padding: 18.5px 54.90px;
     background-color: transparent;
     border: 1px solid #E8EAE1;
     border-radius: 10px;
@@ -94,9 +94,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
-    max-width: 600px;
+    max-width: 635px;
     background-color: #E8EAE1;
-    padding: 50px;
+    padding: 53px;
     border-radius: 8px;
     z-index: 10001;
     max-height: 90vh;
@@ -125,7 +125,7 @@
 
 .input,
 .textarea {
-    padding: 16px 0;
+    padding: 16px 0 7px 0;
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #231F20;
@@ -133,6 +133,7 @@
     font-size: 16px;
     color: #231F20;
     outline: none;
+    letter-spacing: -0.32px;
 }
 
 .input::placeholder,
@@ -159,7 +160,7 @@
 }
 
 .submitButton {
-    padding: 16px 40px;
+    padding: 20px 40px;
     background-color: #231F20;
     color: #E8EAE1;
     border: none;

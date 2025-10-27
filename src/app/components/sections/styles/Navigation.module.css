@@ -6,7 +6,8 @@
   z-index: 1000;
   background-color: transparent; /* allow hero under nav */
   backdrop-filter: none;
-  padding: 16px 32px;
+  padding: 30px 30px 7px 30px;
+  letter-spacing: .48px;
 }
 
 .navContainer {
@@ -57,7 +58,7 @@
   text-decoration: none;
   text-transform: uppercase;
   transition: all 0.3s ease;
-  padding: 8px 16px;
+  padding: 6px 29px;
   border-radius: 10px;
 }
 

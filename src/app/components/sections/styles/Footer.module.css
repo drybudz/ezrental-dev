@@ -5,7 +5,7 @@
 /* Orange Bar */
 .orangeBar {
   background-color: #F7550C;
-  padding: 16px 32px;
+  padding: 11px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -49,7 +49,7 @@
 /* Black Bar */
 .blackBar {
   background-color: #231F20;
-  padding: 84px 32px 32px 32px;
+  padding: 66px 32px 32px;
 }
 
 .blackBarContent {
