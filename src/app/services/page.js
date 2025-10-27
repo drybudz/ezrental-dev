@@ -2,6 +2,7 @@
 
 import { useAppContext, Loading } from "../components/AppContext";
 import HeroBanner from "../components/sections/HeroBanner";
+import ServicesAccordion from "../components/sections/ServicesAccordion";
 import Footer from "../components/sections/Footer";
 
 export default function Services() {
@@ -20,6 +21,10 @@ export default function Services() {
       <HeroBanner 
         heroText={servicesPageData?.heroText}
         heroImage={servicesPageData?.heroImage}
+      />
+      <ServicesAccordion 
+        servicesImage={servicesPageData?.servicesImage}
+        services={servicesPageData?.services}
       />
       <Footer footerData={homePageData} />
     </div>
