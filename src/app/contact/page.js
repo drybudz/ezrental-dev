@@ -1,10 +1,10 @@
 'use client';
 
 import { useAppContext, Loading } from "../components/AppContext";
-import HeroBanner from "../components/sections/HeroBanner";
+import ContactForm from "../components/sections/ContactForm";
 import Footer from "../components/sections/Footer";
 
-export default function About() {
+export default function Contact() {
   const context = useAppContext();
 
   if (!context) {
@@ -12,15 +12,14 @@ export default function About() {
   }
 
   const { allData } = context;
-  const aboutPageData = allData?.aboutPage || null;
+  const contactPageData = allData?.contactPage || null;
   const homePageData = allData?.homePage || null;
 
+  console.log("Contact Page Data:", contactPageData);
+
   return (
-    <div className="aboutPage">
-      <HeroBanner 
-        heroText={aboutPageData?.heroText}
-        heroImage={aboutPageData?.heroImage}
-      />
+    <div className="contactPage">
+      <ContactForm contactPageData={contactPageData} />
       <Footer footerData={homePageData} />
     </div>
   );

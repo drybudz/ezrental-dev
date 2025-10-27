@@ -1,0 +1,247 @@
+.contactForm {
+    padding: 80px 0;
+    min-height: 70vh;
+    /* background-color: #E8EAE1; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    max-width: 1820px;
+    margin: 0 auto;
+    padding: 0 50px;
+    display: flex;
+    gap: 300px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.titleColumn {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.typesColumn {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 70px;
+}
+
+.title {
+    font-family: var(--font-geogrotesque);
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 90%;
+    color: #E8EAE1;
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-transform: uppercase;
+}
+
+.typesGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.typeButton {
+    padding: 12px 32px;
+    background-color: transparent;
+    border: 1px solid #E8EAE1;
+    border-radius: 10px;
+    color: #E8EAE1;
+    font-family: var(--font-geogrotesque);
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.48px;
+
+}
+
+.typeButton:hover {
+    background-color: #E8EAE1;
+    color: #231F20;
+    border-radius: 10px;
+}
+
+.typeButton.selected {
+    background-color: #E8EAE1;
+    color: #231F20;
+    border: 1px solid #E8EAE1;
+}
+
+/* Modal */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #231F20;
+    opacity: 0.7;
+    z-index: 10000;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    background-color: #E8EAE1;
+    padding: 50px;
+    border-radius: 8px;
+    z-index: 10001;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.formTitle {
+    font-family: var(--font-superclarendon);
+    font-weight: 400;
+    font-size: 48px;
+    color: #231F20;
+    margin: 0 0 24px 0;
+}
+
+.formField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input,
+.textarea {
+    padding: 16px 0;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #231F20;
+    font-family: var(--font-superclarendon);
+    font-size: 16px;
+    color: #231F20;
+    outline: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+    color: #231F20;
+    opacity: 0.6;
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.input.error,
+.textarea.error {
+    border-bottom-color: #F7550C;
+}
+
+.errorMessage {
+    font-family: var(--font-geogrotesque);
+    font-size: 14px;
+    color: #F7550C;
+    margin-top: 4px;
+}
+
+.submitButton {
+    padding: 16px 40px;
+    background-color: #231F20;
+    color: #E8EAE1;
+    border: none;
+    border-radius: 0;
+    letter-spacing: .48px;
+    font-family: var(--font-geogrotesque);
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 16px;
+    border-radius: 10px;
+}
+
+.submitButton:hover {
+    background-color: #E8EAE1;
+    color: #231F20;
+    outline: 1px solid #231F20;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .titleColumn {
+        width: 55%;
+    }
+
+    .typesColumn {
+        width: 45%;
+        padding-right: 0;
+    }
+
+    .container {
+        gap: 200px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .contactForm {
+        padding: 60px 0;
+    }
+
+    .container {
+        flex-direction: column;
+        gap: 40px;
+        padding: 0 20px;
+        align-items: stretch;
+    }
+
+    .titleColumn {
+        width: 100%;
+        justify-content: flex-start;
+        padding-top: 80px;
+        /* Add padding to avoid menu overlap */
+    }
+
+    .typesColumn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .title {
+        font-size: 40px;
+        white-space: normal;
+        word-wrap: break-word;
+        text-align: left;
+    }
+
+    .typesGrid {
+        grid-template-columns: repeat(2, 1fr);
+        /* Keep 2 columns */
+        gap: 16px;
+    }
+
+    .modal {
+        padding: 30px 20px;
+        width: 95%;
+        max-height: 85vh;
+    }
+
+    .formTitle {
+        font-size: 36px;
+    }
+}

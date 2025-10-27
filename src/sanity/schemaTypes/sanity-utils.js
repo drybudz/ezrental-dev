@@ -136,6 +136,12 @@ export async function getAllEZRentalData() {
             },
             alt
           }
+        },
+        "contactPage": *[_type == "contactPage"][0]{
+          title,
+          contactTypes[]{
+            value
+          }
         }
       }`
     );

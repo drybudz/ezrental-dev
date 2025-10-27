@@ -1,17 +1,19 @@
 'use client';
 
-import { useAppContext } from "../components/AppContext";
+import { useAppContext, Loading } from "../components/AppContext";
 import HeroBanner from "../components/sections/HeroBanner";
+import Footer from "../components/sections/Footer";
 
 export default function Services() {
   const context = useAppContext();
 
   if (!context) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   const { allData } = context;
   const servicesPageData = allData?.servicesPage || null;
+  const homePageData = allData?.homePage || null;
 
   return (
     <div className="servicesPage">
@@ -19,6 +21,7 @@ export default function Services() {
         heroText={servicesPageData?.heroText}
         heroImage={servicesPageData?.heroImage}
       />
+      <Footer footerData={homePageData} />
     </div>
   );
 }
