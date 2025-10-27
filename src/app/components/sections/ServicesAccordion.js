@@ -36,12 +36,12 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         imageRef.current,
-        { y: 10 },
+        { y: 0 },
         {
           y: 250,
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top top',
+            start: 'top 50%',
             end: 'bottom top',
             scrub: 1,
           },
