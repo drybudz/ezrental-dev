@@ -127,16 +127,21 @@ export default function Navigation({ navigationData }) {
 
           {/* Desktop Menu Links */}
           <div className={styles.menu}>
-            {mainMenu.map((item, index) => (
-              <Link
-                key={index}
-                href={item.linkUrl}
-                target={item.linkTarget || '_self'}
-                className={styles.menuLink}
-              >
-                {item.linkText}
-              </Link>
-            ))}
+            {mainMenu.map((item, index) => {
+              const isActive = pathname === item.linkUrl;
+              return (
+                <Link
+                  key={index}
+                  href={item.linkUrl}
+                  target={item.linkTarget || '_self'}
+                  className={styles.menuLink}
+                  data-active={isActive ? 'true' : undefined}
+                  onClick={handleNavLinkClick}
+                >
+                  {item.linkText}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Mobile Hamburger Menu */}
@@ -157,17 +162,21 @@ export default function Navigation({ navigationData }) {
         className={`${styles.mobileMenuContainer} ${isMenuOpen && isMobile ? styles.menuOpen : ''}`}
       >
         <div className={styles.mobileMenuContent}>
-          {mainMenu.map((item, index) => (
-            <Link
-              key={index}
-              href={item.linkUrl}
-              target={item.linkTarget || '_self'}
-              className={styles.mobileMenuLink}
-              onClick={handleNavLinkClick}
-            >
-              {item.linkText}
-            </Link>
-          ))}
+          {mainMenu.map((item, index) => {
+            const isActive = pathname === item.linkUrl;
+            return (
+              <Link
+                key={index}
+                href={item.linkUrl}
+                target={item.linkTarget || '_self'}
+                className={styles.mobileMenuLink}
+                data-active={isActive ? 'true' : undefined}
+                onClick={handleNavLinkClick}
+              >
+                {item.linkText}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </>

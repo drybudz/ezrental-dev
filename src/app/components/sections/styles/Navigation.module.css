@@ -67,6 +67,12 @@
   background-color: #E8EAE1;
 }
 
+.menuLink.active,
+.menuLink[data-active="true"] {
+  color: #231F20;
+  background-color: #E8EAE1;
+}
+
 /* Hamburger Menu */
 .hamburger {
   display: none;
@@ -130,6 +136,11 @@
 }
 
 .mobileMenuLink:hover {
+  color: #F7550C;
+}
+
+.mobileMenuLink.mobileActive,
+.mobileMenuLink[data-active="true"] {
   color: #F7550C;
 }
 
