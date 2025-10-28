@@ -142,6 +142,17 @@ export async function getAllEZRentalData() {
               url,
               target
             }
+          },
+          quoteTitle,
+          quoteImage{
+            asset->{
+              url,
+              metadata {
+                dimensions,
+                lqip
+              }
+            },
+            alt
           }
         },
         "servicesPage": *[_type == "servicesPage"][0]{

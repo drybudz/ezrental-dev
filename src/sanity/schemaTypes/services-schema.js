@@ -41,7 +41,7 @@ const servicesPage = {
           description: 'Alternative text for the services image.',
         },
       ],
-      description: 'The image for the services accordion section.',
+      description: 'Optional. The image for the services accordion section.',
     },
     {
       name: 'services',
@@ -96,7 +96,7 @@ const servicesPage = {
           description: 'Alternative text for the quote section image.',
         },
       ],
-      description: 'Full width image for the quote section.',
+      description: 'Optional. Full width image for the quote section.',
     },
   ],
   preview: {

@@ -94,6 +94,31 @@ export default {
         },
       ],
     },
+    {
+      name: 'quoteTitle',
+      title: 'Quote Section Title',
+      type: 'text',
+      description: 'The title text for the quote section. Respects whitespace and text wrap.',
+      group: 'content'
+    },
+    {
+      name: 'quoteImage',
+      title: 'Quote Section Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: 'Alternative text for the quote section image.',
+        },
+      ],
+      description: 'Optional. Full width image for the quote section.',
+      group: 'content'
+    },
   ]
 }
 
