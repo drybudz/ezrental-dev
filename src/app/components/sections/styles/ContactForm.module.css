@@ -246,3 +246,17 @@
         font-size: 36px;
     }
 }
+
+@media (max-width: 480px) {
+
+    .typeButton {
+        padding: 18.5px 44.90px;
+    }
+}
+
+@media (max-width: 375px) {
+
+    .typeButton {
+        padding: 18.5px 30px;
+    }
+}

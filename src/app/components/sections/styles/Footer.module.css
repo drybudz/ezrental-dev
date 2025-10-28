@@ -310,3 +310,14 @@
     font-size: 36px;
   }
 }
+
+@media (max-width: 375px) {
+
+  .coordinates {
+    font-size: 32px;
+  }
+  
+  .emailLink, .additionalLink, .additionalText {
+    font-size: 19px;
+  }
+}
