@@ -2,6 +2,7 @@
 
 import { useAppContext, Loading } from "../components/AppContext";
 import HeroBanner from "../components/sections/HeroBanner";
+import AboutSection from "../components/sections/AboutSection";
 import FiftySection from "../components/sections/FiftySection";
 import QuoteSection from "../components/sections/QuoteSection";
 import LeftInfoBanner from "../components/sections/LeftInfoBanner";
@@ -24,6 +25,7 @@ export default function About() {
         heroText={aboutPageData?.heroText}
         heroImage={aboutPageData?.heroImage}
       />
+      <AboutSection aboutSection={aboutPageData?.aboutSection} />
       <QuoteSection 
         quoteTitle={aboutPageData?.quoteTitle}
         quoteImage={aboutPageData?.quoteImage}

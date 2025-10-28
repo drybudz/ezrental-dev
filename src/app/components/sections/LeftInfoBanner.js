@@ -39,7 +39,7 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: 'top 80%',
-        end: 'bottom 20%',
+        end: 'bottom -10%',
         onEnter: () => {
           // Header animation
           gsap.to(headerRef.current, {

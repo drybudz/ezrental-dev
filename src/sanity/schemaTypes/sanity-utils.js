@@ -143,6 +143,23 @@ export async function getAllEZRentalData() {
               target
             }
           },
+          aboutSection{
+            items[]{
+              headline,
+              title,
+              description
+            },
+            image{
+              asset->{
+                url,
+                metadata {
+                  dimensions,
+                  lqip
+                }
+              },
+              alt
+            }
+          },
           quoteTitle,
           quoteImage{
             asset->{

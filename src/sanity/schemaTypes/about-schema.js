@@ -26,6 +26,68 @@ export default {
       ],
     },
     {
+      name: 'aboutSection',
+      title: 'About Section',
+      type: 'object',
+      group: 'content',
+      fields: [
+        {
+          name: 'items',
+          title: 'About Items',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                {
+                  name: 'headline',
+                  title: 'Headline',
+                  type: 'string',
+                  description: 'Headline for the item (20px, Geogrotesque)',
+                },
+                {
+                  name: 'title',
+                  title: 'Title',
+                  type: 'text',
+                  description: 'Title for the item (25px, Superclarendon)',
+                },
+                {
+                  name: 'description',
+                  title: 'Description',
+                  type: 'text',
+                  description: 'Description text (22px, Superclarendon)',
+                },
+              ],
+              preview: {
+                select: {
+                  title: 'headline',
+                  subtitle: 'title',
+                },
+              },
+            },
+          ],
+          validation: Rule => Rule.max(3),
+          description: 'List of 3 about items.',
+        },
+        {
+          name: 'image',
+          title: 'Section Image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+            },
+          ],
+          description: 'Full width image for the bottom of the section.',
+        },
+      ],
+    },
+    {
       name: 'fiftySection',
       title: 'FiftySection',
       type: 'object',
