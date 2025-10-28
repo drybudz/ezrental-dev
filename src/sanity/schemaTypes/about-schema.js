@@ -16,8 +16,84 @@ export default {
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
-      group: 'content'
-    }
+      group: 'content',
+      fields: [
+        {
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+        },
+      ],
+    },
+    {
+      name: 'fiftySection',
+      title: 'FiftySection',
+      type: 'object',
+      group: 'content',
+      fields: [
+        {
+          name: 'header',
+          title: 'Header',
+          type: 'string',
+          description: 'Header text above the title.',
+        },
+        {
+          name: 'image',
+          title: 'Section Image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+            },
+          ],
+        },
+        {
+          name: 'title',
+          title: 'Title',
+          type: 'text',
+          description: 'Main title for the section.',
+        },
+        {
+          name: 'description',
+          title: 'Description',
+          type: 'text',
+          description: 'Description text for the section.',
+        },
+        {
+          name: 'cta',
+          title: 'Call to Action',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              title: 'Button Text',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'Button URL',
+              type: 'string',
+            },
+            {
+              name: 'target',
+              title: 'Link Target',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Same Window', value: '_self' },
+                  { title: 'New Window', value: '_blank' },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    },
   ]
 }
 

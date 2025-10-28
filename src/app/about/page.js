@@ -2,6 +2,7 @@
 
 import { useAppContext, Loading } from "../components/AppContext";
 import HeroBanner from "../components/sections/HeroBanner";
+import FiftySection from "../components/sections/FiftySection";
 import Footer from "../components/sections/Footer";
 
 export default function About() {
@@ -21,6 +22,7 @@ export default function About() {
         heroText={aboutPageData?.heroText}
         heroImage={aboutPageData?.heroImage}
       />
+      <FiftySection fiftySection={aboutPageData?.fiftySection} />
       <Footer footerData={homePageData} />
     </div>
   );

@@ -122,6 +122,26 @@ export async function getAllEZRentalData() {
               }
             },
             alt
+          },
+          fiftySection{
+            header,
+            image{
+              asset->{
+                url,
+                metadata {
+                  dimensions,
+                  lqip
+                }
+              },
+              alt
+            },
+            title,
+            description,
+            cta{
+              text,
+              url,
+              target
+            }
           }
         },
         "servicesPage": *[_type == "servicesPage"][0]{

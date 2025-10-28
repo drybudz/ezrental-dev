@@ -31,14 +31,15 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
 
   useEffect(() => {
     if (!imageRef.current) return;
+    if (isMobile) return; // Skip parallax on mobile
 
-    // Parallax effect for the image
+    // Parallax effect for the image (desktop only)
     const ctx = gsap.context(() => {
       gsap.fromTo(
         imageRef.current,
         { x: 0 },
         {
-          x: 250,
+          x: 70,
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 7%',
@@ -52,7 +53,7 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
     return () => {
       ctx.revert();
     };
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     // Smooth accordion animation

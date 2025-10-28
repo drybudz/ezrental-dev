@@ -1,4 +1,4 @@
-.fiftyContact {
+.fiftySection {
   display: flex;
   width: 100%;
   min-height: 100vh;
@@ -22,10 +22,21 @@
   width: 50%; /* Force exact 50% */
   background-color: #231F20;
   color: #E8EAE1;
-  padding: 80px 60px;
+  padding: 80px 36px 80px 60px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+}
+
+/* Header */
+.header {
+  font-family: var(--font-superclarendon), sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 101%;
+  letter-spacing: -0.32px;
+  color: #E8EAE1;
+  margin: 0 0 30px 0;
 }
 
 /* Title */
@@ -35,7 +46,7 @@
   font-weight: 600;
   line-height: 90%;
   color: #E8EAE1;
-  margin: 0;
+  margin: 0 0 250px;
   text-transform: uppercase;
   white-space: pre-wrap;
   text-wrap: balance;
@@ -45,7 +56,7 @@
 .bottomContent {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 90px; /* 90px gap between description and CTA */
 }
 
 /* Description */
@@ -87,7 +98,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .fiftyContact {
+  .fiftySection {
     flex-direction: column;
     min-height: auto;
   }
@@ -106,6 +117,10 @@
     min-height: 70vh;
   }
 
+  .header {
+    font-size: 18px;
+  }
+
   .title {
     font-size: 48px;
     white-space: normal;
@@ -117,11 +132,19 @@
     white-space: normal;
     text-wrap: wrap;
   }
+
+  .bottomContent {
+    gap: 60px;
+  }
 }
 
 @media (max-width: 480px) {
   .contentColumn {
     padding: 40px 20px 65px 20px;
+  }
+
+  .header {
+    font-size: 16px;
   }
 
   .title {
@@ -132,8 +155,13 @@
     font-size: 17.5px;
   }
 
+  .bottomContent {
+    gap: 50px;
+  }
+
   .ctaButton {
     padding: 14px 28px;
     font-size: 20px;
   }
 }
+
