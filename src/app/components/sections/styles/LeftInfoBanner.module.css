@@ -1,0 +1,168 @@
+.leftInfoBanner {
+  position: relative;
+  width: 100%;
+  max-height: 680px;
+  overflow: hidden;
+}
+
+.imageBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 680px;
+}
+
+.backgroundImage {
+  object-fit: cover;
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(35, 31, 32, 0.6); /* Dark overlay for text readability */
+}
+
+.contentWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 680px;
+  display: flex;
+  align-items: center;
+}
+
+.contentContainer {
+  max-width: 1820px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+/* Header */
+.header {
+  font-family: var(--font-superclarendon);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 101%;
+  letter-spacing: -0.32px;
+  color: #E8EAE1;
+  margin: 0;
+}
+
+/* Title */
+.title {
+  font-family: var(--font-geogrotesque);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 90%;
+  color: #E8EAE1;
+  margin: 0 0 50px 0;
+  text-transform: uppercase;
+  white-space: pre-wrap;
+  text-wrap: balance;
+}
+
+/* Description */
+.description {
+  font-family: var(--font-superclarendon);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 118%;
+  color: #E8EAE1;
+  margin: 0;
+  letter-spacing: -0.64px;
+  white-space: pre-wrap;
+  text-wrap: balance;
+  max-width: 600px;
+}
+
+/* CTA Button */
+.ctaButton {
+  display: inline-block;
+  padding: 7px 50px;
+  background-color: transparent;
+  color: #E8EAE1;
+  border: 1px solid #E8EAE1;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: var(--font-geogrotesque);
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  letter-spacing: 0.96px;
+}
+
+.ctaButton:hover {
+  background-color: #E8EAE1;
+  color: #231F20;
+  border: 1px solid #E8EAE1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .leftInfoBanner {
+    max-height: none;
+  }
+
+  .imageBackground {
+    min-height: 500px;
+  }
+
+  .contentWrapper {
+    min-height: 500px;
+  }
+
+  .contentContainer {
+    padding: 60px 40px;
+    gap: 24px;
+  }
+
+  .header {
+    font-size: 18px;
+  }
+
+  .title {
+    font-size: 32px;
+    white-space: normal;
+    text-wrap: wrap;
+  }
+
+  .description {
+    font-size: 18px;
+    white-space: normal;
+    text-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentContainer {
+    padding: 40px 20px;
+  }
+
+  .header {
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .ctaButton {
+    padding: 12px 32px;
+  }
+}
+

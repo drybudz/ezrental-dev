@@ -4,6 +4,7 @@ import { useAppContext, Loading } from "../components/AppContext";
 import HeroBanner from "../components/sections/HeroBanner";
 import FiftySection from "../components/sections/FiftySection";
 import QuoteSection from "../components/sections/QuoteSection";
+import LeftInfoBanner from "../components/sections/LeftInfoBanner";
 import Footer from "../components/sections/Footer";
 
 export default function About() {
@@ -28,6 +29,7 @@ export default function About() {
         quoteImage={aboutPageData?.quoteImage}
       />
       <FiftySection fiftySection={aboutPageData?.fiftySection} />
+      <LeftInfoBanner leftInfoBanner={aboutPageData?.leftInfoBanner} />
       <Footer footerData={homePageData} />
     </div>
   );

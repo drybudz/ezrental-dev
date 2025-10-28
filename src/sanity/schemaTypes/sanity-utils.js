@@ -153,6 +153,26 @@ export async function getAllEZRentalData() {
               }
             },
             alt
+          },
+          leftInfoBanner{
+            header,
+            image{
+              asset->{
+                url,
+                metadata {
+                  dimensions,
+                  lqip
+                }
+              },
+              alt
+            },
+            title,
+            description,
+            cta{
+              text,
+              url,
+              target
+            }
           }
         },
         "servicesPage": *[_type == "servicesPage"][0]{

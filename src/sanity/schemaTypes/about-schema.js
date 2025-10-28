@@ -119,6 +119,75 @@ export default {
       description: 'Optional. Full width image for the quote section.',
       group: 'content'
     },
+    {
+      name: 'leftInfoBanner',
+      title: 'LeftInfoBanner',
+      type: 'object',
+      group: 'content',
+      fields: [
+        {
+          name: 'header',
+          title: 'Header',
+          type: 'string',
+          description: 'Header text above the title.',
+        },
+        {
+          name: 'image',
+          title: 'Background Image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+            },
+          ],
+        },
+        {
+          name: 'title',
+          title: 'Title',
+          type: 'text',
+          description: 'Main title for the banner (40px font size).',
+        },
+        {
+          name: 'description',
+          title: 'Description',
+          type: 'text',
+          description: 'Description text for the banner.',
+        },
+        {
+          name: 'cta',
+          title: 'Call to Action',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              title: 'Button Text',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'Button URL',
+              type: 'string',
+            },
+            {
+              name: 'target',
+              title: 'Link Target',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Same Window', value: '_self' },
+                  { title: 'New Window', value: '_blank' },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    },
   ]
 }
 
