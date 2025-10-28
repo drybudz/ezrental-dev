@@ -39,7 +39,7 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
         imageRef.current,
         { x: 0 },
         {
-          x: 70,
+          x: 100,
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 7%',

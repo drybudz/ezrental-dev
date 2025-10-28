@@ -1,7 +1,7 @@
 .fiftyContact {
   display: flex;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 /* Left Column - Image (exactly 50%) */
@@ -35,7 +35,7 @@
   font-weight: 600;
   line-height: 90%;
   color: #E8EAE1;
-  margin: 0;
+  margin: 0 0 330px 0;
   text-transform: uppercase;
   white-space: pre-wrap;
   text-wrap: balance;
