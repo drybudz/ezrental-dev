@@ -3,6 +3,7 @@
 import { useAppContext, Loading } from "../components/AppContext";
 import HeroBanner from "../components/sections/HeroBanner";
 import ServicesAccordion from "../components/sections/ServicesAccordion";
+import QuoteSection from "../components/sections/QuoteSection";
 import Footer from "../components/sections/Footer";
 
 export default function Services() {
@@ -25,6 +26,10 @@ export default function Services() {
       <ServicesAccordion 
         servicesImage={servicesPageData?.servicesImage}
         services={servicesPageData?.services}
+      />
+      <QuoteSection 
+        quoteTitle={servicesPageData?.quoteTitle}
+        quoteImage={servicesPageData?.quoteImage}
       />
       <Footer footerData={homePageData} />
     </div>

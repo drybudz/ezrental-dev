@@ -75,6 +75,29 @@ const servicesPage = {
       validation: Rule => Rule.max(10),
       description: 'List of services (max 10).',
     },
+    {
+      name: 'quoteTitle',
+      title: 'Quote Section Title',
+      type: 'text',
+      description: 'The title text for the quote section. Respects whitespace and text wrap.',
+    },
+    {
+      name: 'quoteImage',
+      title: 'Quote Section Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: 'Alternative text for the quote section image.',
+        },
+      ],
+      description: 'Full width image for the quote section.',
+    },
   ],
   preview: {
     select: {
