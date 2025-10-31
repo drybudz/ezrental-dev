@@ -17,6 +17,22 @@ export async function getAllEZRentalData() {
             },
             alt
           },
+          loaderSettings{
+            image{
+              asset->{
+                url,
+                metadata {
+                  dimensions,
+                  lqip
+                }
+              },
+              alt
+            },
+            size,
+            animationDuration,
+            backgroundColor,
+            displayDuration
+          },
           
           // Centered Content Section
           centeredTitle,

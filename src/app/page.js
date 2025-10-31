@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { useAppContext } from "./components/AppContext";
+import HeroBannerLoader from "./components/sections/HeroBannerLoader";
 import HeroBannerGSAP from "./components/sections/HeroBannerGSAP";
 import CenteredOrangeContentGSAP from "./components/sections/CenteredOrangeContentGSAP";
 import HorizontalShowcaseGSAP from "./components/sections/HorizontalShowcaseGSAP";
@@ -10,6 +12,7 @@ import Footer from "./components/sections/Footer";
 
 export default function Home() {
   const context = useAppContext();
+  const [loaderFinished, setLoaderFinished] = useState(false);
 
   if (!context) {
     return <div>Loading...</div>;
@@ -21,10 +24,17 @@ export default function Home() {
 
   return (
     <div className="homePage">
+      {/* Loader Component */}
+      <HeroBannerLoader
+        loaderSettings={homePageData?.loaderSettings}
+        onComplete={() => setLoaderFinished(true)}
+      />
+
       {/* Hero Banner Section */}
       <HeroBannerGSAP
         heroText={homePageData?.heroText}
         heroImage={homePageData?.heroImage}
+        loaderFinished={loaderFinished}
       />
 
       {/* Centered Orange Content Section */}

@@ -46,6 +46,63 @@ const homePage = {
       description: 'The main background or feature image for the hero section.',
       group: 'content',
     },
+    {
+      name: 'loaderSettings',
+      title: 'Loader Settings',
+      type: 'object',
+      description: 'Configure the initial loading animation.',
+      group: 'content',
+      fields: [
+        {
+          name: 'image',
+          title: 'Loader Image',
+          type: 'image',
+          description: 'The logo/image to show during initial load.',
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+            },
+          ],
+        },
+        {
+          name: 'size',
+          title: 'Image Size (pixels)',
+          type: 'number',
+          description: 'Width and height of the loader image (e.g., 60)',
+          validation: Rule => Rule.min(20).max(200),
+          initialValue: 60,
+        },
+        {
+          name: 'animationDuration',
+          title: 'Animation Speed (seconds)',
+          type: 'number',
+          description: 'Time for one full rotation (e.g., 2 for 2 seconds)',
+          validation: Rule => Rule.min(0.5).max(10),
+          initialValue: 2,
+        },
+        {
+          name: 'backgroundColor',
+          title: 'Background Color',
+          type: 'string',
+          description: 'Hex color code for the loader background (e.g., #231F20)',
+          validation: Rule => Rule.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, {
+            name: 'hex color',
+            invert: false,
+          }).error('Please enter a valid hex color code (e.g., #231F20)'),
+          initialValue: '#231F20',
+        },
+        {
+          name: 'displayDuration',
+          title: 'Display Duration (seconds)',
+          type: 'number',
+          description: 'Total time the loader is visible (e.g., 3 for 3 seconds)',
+          validation: Rule => Rule.min(1).max(10),
+          initialValue: 3,
+        },
+      ],
+    },
 
     // --- Centered Content Section ---
     {

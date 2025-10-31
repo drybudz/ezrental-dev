@@ -1,7 +1,7 @@
 .contactForm {
     padding: 80px 0;
     min-height: 70vh;
-    /* background-color: #E8EAE1; */
+    background-color: #000;
     display: flex;
     align-items: center;
     justify-content: center;
