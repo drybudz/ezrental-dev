@@ -6,6 +6,7 @@ import styles from './styles/ContactForm.module.css';
 export default function ContactForm({ contactPageData }) {
   const [selectedType, setSelectedType] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -34,13 +35,20 @@ export default function ContactForm({ contactPageData }) {
   const handleTypeSelect = (value) => {
     setSelectedType(value);
     setIsModalOpen(true);
+    setIsClosing(false);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedType(null);
-    setFormData({ name: '', company: '', email: '', message: '' });
-    setErrors({});
+    setIsClosing(true);
+    
+    // Wait for animation to complete before unmounting
+    setTimeout(() => {
+      setIsModalOpen(false);
+      setIsClosing(false);
+      setSelectedType(null);
+      setFormData({ name: '', company: '', email: '', message: '' });
+      setErrors({});
+    }, 300); // Match animation duration
   };
 
   const handleInputChange = (e) => {
@@ -121,10 +129,13 @@ export default function ContactForm({ contactPageData }) {
       {isModalOpen && (
         <>
           {/* Overlay */}
-          <div className={styles.modalOverlay} onClick={handleOverlayClick} />
+          <div 
+            className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`} 
+            onClick={handleOverlayClick} 
+          />
           
           {/* Modal */}
-          <div className={styles.modal}>
+          <div className={`${styles.modal} ${isClosing ? styles.closing : ''}`}>
             <form onSubmit={handleSubmit} className={styles.form}>
               {/* <h3 className={styles.formTitle}>Contact Us</h3> */}
               
