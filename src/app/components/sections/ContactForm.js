@@ -1,7 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 import styles from './styles/ContactForm.module.css';
+
+const SUBMITTING = 'submitting';
+const SUCCESS = 'success';
+const IDLE = 'idle';
 
 export default function ContactForm({ contactPageData }) {
   const [selectedType, setSelectedType] = useState(null);
@@ -9,6 +14,7 @@ export default function ContactForm({ contactPageData }) {
   const [isClosing, setIsClosing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [status, setStatus] = useState(IDLE);
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -16,9 +22,23 @@ export default function ContactForm({ contactPageData }) {
     message: '',
   });
   const [errors, setErrors] = useState({});
+  const timeoutsRef = useRef([]);
 
   const contactTypes = contactPageData?.contactTypes || [];
   const title = contactPageData?.title || '';
+
+  const addTimeout = (callback, delay) => {
+    const id = setTimeout(callback, delay);
+    timeoutsRef.current.push(id);
+    return id;
+  };
+
+  const clearPendingTimeouts = () => {
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+  };
+
+  useEffect(() => () => clearPendingTimeouts(), []);
 
   const validateName = (name) => name.trim().length >= 3;
   const validateCompany = (company) => company.trim().length >= 2;
@@ -32,6 +52,7 @@ export default function ContactForm({ contactPageData }) {
     setSelectedType(value);
     setIsModalOpen(true);
     setIsClosing(false);
+    setStatus(IDLE);
   };
 
   const resetForm = () => {
@@ -40,12 +61,19 @@ export default function ContactForm({ contactPageData }) {
     setErrors({});
     setSubmitError(null);
     setIsSubmitting(false);
+    setStatus(IDLE);
+    clearPendingTimeouts();
   };
 
   const handleCloseModal = () => {
+    if (isSubmitting && status !== SUCCESS) {
+      return;
+    }
+
+    clearPendingTimeouts();
     setIsClosing(true);
 
-    setTimeout(() => {
+    addTimeout(() => {
       setIsModalOpen(false);
       setIsClosing(false);
       resetForm();
@@ -90,6 +118,8 @@ export default function ContactForm({ contactPageData }) {
 
     setIsSubmitting(true);
     setSubmitError(null);
+    setStatus(SUBMITTING);
+    clearPendingTimeouts();
 
     try {
       const response = await fetch('/api/contact', {
@@ -108,17 +138,24 @@ export default function ContactForm({ contactPageData }) {
         throw new Error(data.error || 'Something went wrong. Please try again.');
       }
 
-      handleCloseModal();
-      alert('Thank you! Your message is on its way.');
+      addTimeout(() => {
+        setStatus(SUCCESS);
+        setIsSubmitting(false);
+
+        addTimeout(() => {
+          handleCloseModal();
+        }, 2500);
+      }, 1500);
     } catch (error) {
       console.error('Contact form submission failed', error);
       setSubmitError(error.message || 'Something went wrong. Please try again.');
       setIsSubmitting(false);
+      setStatus(IDLE);
     }
   };
 
   const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
+    if (e.target === e.currentTarget && status !== SUBMITTING) {
       handleCloseModal();
     }
   };
@@ -158,63 +195,95 @@ export default function ContactForm({ contactPageData }) {
             <form onSubmit={handleSubmit} className={styles.form}>
               <input type="hidden" name="contactType" value={selectedType || ''} />
 
-              <div className={styles.formField}>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className={`${styles.input} ${errors.name ? styles.error : ''}`}
-                  disabled={isSubmitting}
-                />
-                {errors.name && <span className={styles.errorMessage}>{errors.name}</span>}
-              </div>
+              {status === IDLE && (
+                <>
+                  <div className={styles.formField}>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className={`${styles.input} ${errors.name ? styles.error : ''}`}
+                      disabled={isSubmitting}
+                    />
+                    {errors.name && <span className={styles.errorMessage}>{errors.name}</span>}
+                  </div>
 
-              <div className={styles.formField}>
-                <input
-                  type="text"
-                  name="company"
-                  placeholder="Company"
-                  value={formData.company}
-                  onChange={handleInputChange}
-                  className={`${styles.input} ${errors.company ? styles.error : ''}`}
-                  disabled={isSubmitting}
-                />
-                {errors.company && <span className={styles.errorMessage}>{errors.company}</span>}
-              </div>
+                  <div className={styles.formField}>
+                    <input
+                      type="text"
+                      name="company"
+                      placeholder="Company"
+                      value={formData.company}
+                      onChange={handleInputChange}
+                      className={`${styles.input} ${errors.company ? styles.error : ''}`}
+                      disabled={isSubmitting}
+                    />
+                    {errors.company && (
+                      <span className={styles.errorMessage}>{errors.company}</span>
+                    )}
+                  </div>
 
-              <div className={styles.formField}>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`${styles.input} ${errors.email ? styles.error : ''}`}
-                  disabled={isSubmitting}
-                />
-                {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
-              </div>
+                  <div className={styles.formField}>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={`${styles.input} ${errors.email ? styles.error : ''}`}
+                      disabled={isSubmitting}
+                    />
+                    {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
+                  </div>
 
-              <div className={styles.formField}>
-                <textarea
-                  name="message"
-                  placeholder="Type your message here"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows={6}
-                  className={`${styles.textarea} ${errors.message ? styles.error : ''}`}
-                  disabled={isSubmitting}
-                />
-                {errors.message && <span className={styles.errorMessage}>{errors.message}</span>}
-              </div>
+                  <div className={styles.formField}>
+                    <textarea
+                      name="message"
+                      placeholder="Type your message here"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      rows={6}
+                      className={`${styles.textarea} ${errors.message ? styles.error : ''}`}
+                      disabled={isSubmitting}
+                    />
+                    {errors.message && (
+                      <span className={styles.errorMessage}>{errors.message}</span>
+                    )}
+                  </div>
+                </>
+              )}
 
-              {submitError && <div className={styles.submitError}>{submitError}</div>}
+              {submitError && status === IDLE && (
+                <div className={styles.submitError}>{submitError}</div>
+              )}
 
-              <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
-                {isSubmitting ? 'SENDING...' : 'SUBMIT'}
-              </button>
+              {status !== IDLE && (
+                <div className={styles.sendingState}>
+                  <div className={styles.spinnerWrapper}>
+                    <Image
+                      src="/favicon.png"
+                      alt="EZ Rental logo"
+                      width={80}
+                      height={80}
+                      className={styles.spinner}
+                    />
+                  </div>
+                  <div className={styles.sendingText}>Sending...</div>
+                  {status === SUCCESS && (
+                    <div className={styles.successMessage}>
+                      Thank you! Your message is on its way.
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {status === IDLE && (
+                <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+                  {isSubmitting ? 'SENDING...' : 'SUBMIT'}
+                </button>
+              )}
             </form>
           </div>
         </>
