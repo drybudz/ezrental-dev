@@ -210,6 +210,13 @@
     margin-top: 4px;
 }
 
+.submitError {
+    font-family: var(--font-geogrotesque);
+    font-size: 14px;
+    color: #F7550C;
+    margin-top: 8px;
+}
+
 .submitButton {
     padding: 20px 40px;
     background-color: #E8EAE1;

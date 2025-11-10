@@ -7,6 +7,8 @@ export default function ContactForm({ contactPageData }) {
   const [selectedType, setSelectedType] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -18,12 +20,6 @@ export default function ContactForm({ contactPageData }) {
   const contactTypes = contactPageData?.contactTypes || [];
   const title = contactPageData?.title || '';
 
-  // Debug logging
-  console.log('ContactForm - contactPageData:', contactPageData);
-  console.log('ContactForm - title:', title);
-  console.log('ContactForm - contactTypes:', contactTypes);
-
-  // Validation functions
   const validateName = (name) => name.trim().length >= 3;
   const validateCompany = (company) => company.trim().length >= 2;
   const validateEmail = (email) => {
@@ -38,31 +34,38 @@ export default function ContactForm({ contactPageData }) {
     setIsClosing(false);
   };
 
+  const resetForm = () => {
+    setSelectedType(null);
+    setFormData({ name: '', company: '', email: '', message: '' });
+    setErrors({});
+    setSubmitError(null);
+    setIsSubmitting(false);
+  };
+
   const handleCloseModal = () => {
     setIsClosing(true);
-    
-    // Wait for animation to complete before unmounting
+
     setTimeout(() => {
       setIsModalOpen(false);
       setIsClosing(false);
-      setSelectedType(null);
-      setFormData({ name: '', company: '', email: '', message: '' });
-      setErrors({});
-    }, 300); // Match animation duration
+      resetForm();
+    }, 300);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
+    }
+    if (submitError) {
+      setSubmitError(null);
     }
   };
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!validateName(formData.name)) {
       newErrors.name = 'Name must be at least 3 characters';
     }
@@ -75,22 +78,43 @@ export default function ContactForm({ contactPageData }) {
     if (!validateMessage(formData.message)) {
       newErrors.message = 'Message cannot be empty';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
-    
-    // Here you would typically send the data to your backend
-    console.log('Submitting form:', { ...formData, contactType: selectedType });
-    
-    // Reset form after submission
-    handleCloseModal();
-    alert('Thank you for contacting us! We will get back to you soon.');
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          contactType: selectedType,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || 'Something went wrong. Please try again.');
+      }
+
+      handleCloseModal();
+      alert('Thank you! Your message is on its way.');
+    } catch (error) {
+      console.error('Contact form submission failed', error);
+      setSubmitError(error.message || 'Something went wrong. Please try again.');
+      setIsSubmitting(false);
+    }
   };
 
   const handleOverlayClick = (e) => {
@@ -102,12 +126,10 @@ export default function ContactForm({ contactPageData }) {
   return (
     <section className={styles.contactForm}>
       <div className={styles.container}>
-        {/* Title - 50% width */}
         <div className={styles.titleColumn}>
           <h2 className={styles.title}>{title}</h2>
         </div>
 
-        {/* Contact Types Grid - 50% width */}
         <div className={styles.typesColumn}>
           <div className={styles.typesGrid}>
             {contactTypes.map((type, index) => (
@@ -125,28 +147,17 @@ export default function ContactForm({ contactPageData }) {
         </div>
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
         <>
-          {/* Overlay */}
-          <div 
-            className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`} 
-            onClick={handleOverlayClick} 
+          <div
+            className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
+            onClick={handleOverlayClick}
           />
-          
-          {/* Modal */}
+
           <div className={`${styles.modal} ${isClosing ? styles.closing : ''}`}>
             <form onSubmit={handleSubmit} className={styles.form}>
-              {/* <h3 className={styles.formTitle}>Contact Us</h3> */}
-              
-              {/* Hidden contact type field */}
-              <input
-                type="hidden"
-                name="contactType"
-                value={selectedType}
-              />
+              <input type="hidden" name="contactType" value={selectedType || ''} />
 
-              {/* Name */}
               <div className={styles.formField}>
                 <input
                   type="text"
@@ -155,11 +166,11 @@ export default function ContactForm({ contactPageData }) {
                   value={formData.name}
                   onChange={handleInputChange}
                   className={`${styles.input} ${errors.name ? styles.error : ''}`}
+                  disabled={isSubmitting}
                 />
                 {errors.name && <span className={styles.errorMessage}>{errors.name}</span>}
               </div>
 
-              {/* Company */}
               <div className={styles.formField}>
                 <input
                   type="text"
@@ -168,11 +179,11 @@ export default function ContactForm({ contactPageData }) {
                   value={formData.company}
                   onChange={handleInputChange}
                   className={`${styles.input} ${errors.company ? styles.error : ''}`}
+                  disabled={isSubmitting}
                 />
                 {errors.company && <span className={styles.errorMessage}>{errors.company}</span>}
               </div>
 
-              {/* Email */}
               <div className={styles.formField}>
                 <input
                   type="email"
@@ -181,11 +192,11 @@ export default function ContactForm({ contactPageData }) {
                   value={formData.email}
                   onChange={handleInputChange}
                   className={`${styles.input} ${errors.email ? styles.error : ''}`}
+                  disabled={isSubmitting}
                 />
                 {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
               </div>
 
-              {/* Message */}
               <div className={styles.formField}>
                 <textarea
                   name="message"
@@ -194,13 +205,15 @@ export default function ContactForm({ contactPageData }) {
                   onChange={handleInputChange}
                   rows={6}
                   className={`${styles.textarea} ${errors.message ? styles.error : ''}`}
+                  disabled={isSubmitting}
                 />
                 {errors.message && <span className={styles.errorMessage}>{errors.message}</span>}
               </div>
 
-              {/* Submit Button */}
-              <button type="submit" className={styles.submitButton}>
-                SUBMIT
+              {submitError && <div className={styles.submitError}>{submitError}</div>}
+
+              <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+                {isSubmitting ? 'SENDING...' : 'SUBMIT'}
               </button>
             </form>
           </div>
