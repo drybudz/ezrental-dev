@@ -70,7 +70,7 @@
   align-items: center;
   justify-content: flex-end;
   justify-items: end;
-  width: 40%;
+  width: 34%;
   margin-left: auto;
 }
 
@@ -104,6 +104,7 @@
   grid-template-columns: auto 1fr;
   gap: 32px;
   align-items: center;
+  padding-right: 3%;
 }
 
 /* Social Media */
@@ -118,6 +119,7 @@
   font-weight: 600;
   font-size: 20px;
   color: #E8EAE1;
+  letter-spacing: 0.96px;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -146,6 +148,7 @@
   font-weight: 600;
   font-size: 20px;
   color: #E8EAE1;
+  letter-spacing: 0.96px;
   text-decoration: none;
 }
 

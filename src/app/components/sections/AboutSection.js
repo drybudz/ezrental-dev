@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -15,26 +15,12 @@ export default function AboutSection({ aboutSection }) {
   const containerRef = useRef(null);
   const imageRef = useRef(null);
   const itemsRef = useRef([]);
-  const [displayedTexts, setDisplayedTexts] = useState({});
 
   if (!aboutSection || !aboutSection.items || aboutSection.items.length === 0) {
     return null;
   }
 
   const { items, image } = aboutSection;
-
-  // Writing effect function
-  const typewriter = (text, callback, speed = 30) => {
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < text.length) {
-        callback(text.substring(0, i + 1));
-        i++;
-      } else {
-        clearInterval(timer);
-      }
-    }, speed);
-  };
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -56,36 +42,37 @@ export default function AboutSection({ aboutSection }) {
       );
 
       // ScrollTrigger for each item
-      items.forEach((item, index) => {
+      items.forEach((_, index) => {
         const itemElement = itemsRef.current[index];
         if (!itemElement) return;
+
+        const headline = itemElement.querySelector(`.${styles.headline}`);
+        const title = itemElement.querySelector(`.${styles.title}`);
+        const description = itemElement.querySelector(`.${styles.description}`);
+
+        gsap.set([headline, title, description], { opacity: 0, y: 20 });
 
         ScrollTrigger.create({
           trigger: itemElement,
           start: 'top 80%',
+          once: true,
           onEnter: () => {
-            // Show headline and title with fade
-            gsap.fromTo(itemElement.querySelector(`.${styles.headline}`), 
-              { opacity: 0, y: 20 },
-              { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
-            );
-            
-            gsap.fromTo(itemElement.querySelector(`.${styles.title}`), 
-              { opacity: 0, y: 20 },
-              { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: 0.2 }
-            );
+            const tl = gsap.timeline({
+              defaults: { duration: 0.6, ease: 'power2.out' },
+            });
 
-            // Writing effect for description (3 seconds total)
-            const description = itemElement.querySelector(`.${styles.description}`);
-            if (description && item.description) {
-              const charCount = item.description.length;
-              const speed = 3000 / charCount; // 3 seconds total
-              
-              typewriter(item.description, (text) => {
-                setDisplayedTexts(prev => ({ ...prev, [index]: text }));
-              }, speed);
+            if (headline) {
+              tl.to(headline, { opacity: 1, y: 0 });
             }
-          }
+
+            if (title) {
+              tl.to(title, { opacity: 1, y: 0 }, '-=0.3');
+            }
+
+            if (description) {
+              tl.to(description, { opacity: 1, y: 0 }, '-=0.2');
+            }
+          },
         });
       });
     }, containerRef);
@@ -109,9 +96,7 @@ export default function AboutSection({ aboutSection }) {
             >
               <div className={styles.headline}>{item.headline}</div>
               <div className={styles.title}>{item.title}</div>
-              <div className={styles.description}>
-                {displayedTexts[index] || ''}
-              </div>
+              <div className={styles.description}>{item.description}</div>
             </div>
           ))}
         </div>
