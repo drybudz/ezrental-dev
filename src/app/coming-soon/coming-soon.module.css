@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #231F20;
+  padding: 20px;
+  position: relative;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.logo {
+  animation: slowRotate 3.5s linear infinite !important;
+  filter: brightness(1);
+  display: block !important;
+}
+
+@keyframes slowRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.text {
+  font-family: var(--font-superclarendon), sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: #E8EAE1;
+  letter-spacing: -0.32px;
+  margin: 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .text {
+    font-size: 36px;
+  }
+
+  .logoWrapper {
+    margin-bottom: 30px;
+  }
+}
+

@@ -12,8 +12,8 @@ export default function Navigation({ navigationData }) {
   const pathname = usePathname();
   const menuRef = useRef(null);
 
-  // Hide navigation on Studio/Admin routes
-  if (pathname && (pathname.startsWith('/admin') || pathname.startsWith('/studio'))) {
+  // Hide navigation on Studio/Admin routes and coming-soon page
+  if (pathname && (pathname.startsWith('/admin') || pathname.startsWith('/studio') || pathname.startsWith('/coming-soon'))) {
     return null;
   }
 

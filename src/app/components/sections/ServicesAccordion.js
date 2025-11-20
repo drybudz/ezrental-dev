@@ -29,31 +29,6 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  useEffect(() => {
-    if (!imageRef.current) return;
-    if (isMobile) return; // Skip parallax on mobile
-
-    // Parallax effect for the image (desktop only)
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        imageRef.current,
-        { x: 0 },
-        {
-          x: 100,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 7%',
-            end: '90% top',
-            scrub: 1,
-          },
-        }
-      );
-    }, containerRef);
-
-    return () => {
-      ctx.revert();
-    };
-  }, [isMobile]);
 
   useEffect(() => {
     // Smooth accordion animation
@@ -69,22 +44,22 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
       if (isOpen) {
         gsap.to([content, title], {
           height: 'auto',
-          duration: 0.5,
-          ease: 'power2.out',
+          duration: 1.3,
+          ease: 'power3.out',
           opacity: 1,
           y: 0,
         });
       } else {
         gsap.to(content, {
           height: 0,
-          duration: 0.5,
-          ease: 'power2.in',
+          duration: 1.3,
+          ease: 'power3.in',
           opacity: 0,
         });
         gsap.to(title, {
           y: 0,
-          duration: 0.5,
-          ease: 'power2.out',
+          duration: 1.3,
+          ease: 'power3.out',
         });
       }
     });
