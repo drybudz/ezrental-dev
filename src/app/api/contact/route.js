@@ -30,7 +30,7 @@ export async function POST(request) {
     // onboarding@resend.dev will change to contact@ezrentalandservices.com once I have set up the domain & email in resend.
     await resend.emails.send({
       from: 'EZ Rental Contact <onboarding@resend.dev>',
-      to: ['keno10cr@gmail.com', 'charlieacarlson@gmail.com', 'sarah@ezrentalandservices.com'],
+      to: ['keno10cr@gmail.com'],
       subject: `New contact submission${contactType ? ` - ${contactType}` : ''}`,
       replyTo: email,
       text: `Name: ${name}
