@@ -7,6 +7,19 @@ export default {
   ],
   fields: [
     {
+      name: 'pagePreviewName',
+      title: 'Page Preview Name',
+      type: 'string',
+      description: 'This is the name of the page shown in the preview list.',
+      validation: Rule => Rule.required().error('Page preview name is required'),
+      group: 'content',
+    },
+    {
+      name: 'orderRank',
+      type: 'string',
+      hidden: true,
+    },
+    {
       name: 'heroText',
       title: 'Hero Text',
       type: 'text',
@@ -250,6 +263,18 @@ export default {
         },
       ],
     },
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'pagePreviewName',
+      media: 'heroImage',
+    },
+    prepare({ title, media }) {
+      return {
+        title: title || 'About Content',
+        media: media,
+      };
+    },
+  },
 }
 

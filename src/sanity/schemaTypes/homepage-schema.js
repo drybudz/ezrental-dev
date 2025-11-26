@@ -20,6 +20,21 @@ const homePage = {
   ],
 
   fields: [
+    // --- Page Preview Name ---
+    {
+      name: 'pagePreviewName',
+      title: 'Page Preview Name',
+      type: 'string',
+      description: 'This is the name of the page shown in the preview list.',
+      validation: Rule => Rule.required().error('Page preview name is required'),
+      group: 'navigation',
+    },
+    // --- Order Rank (required for orderable lists) ---
+    {
+      name: 'orderRank',
+      type: 'string',
+      hidden: true,
+    },
     // --- Hero Section ---
     {
       name: 'heroText',
@@ -541,9 +556,14 @@ const homePage = {
   // Preview configuration for the Sanity Studio document list
   preview: {
     select: {
-      title: 'centeredTitle',
-      subtitle: 'heroText',
+      title: 'pagePreviewName',
       media: 'heroImage',
+    },
+    prepare({ title, media }) {
+      return {
+        title: title || 'Home Content',
+        media: media,
+      };
     },
   },
 };

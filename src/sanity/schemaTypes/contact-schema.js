@@ -4,6 +4,18 @@ const contactPage = {
   type: 'document',
   fields: [
     {
+      name: 'pagePreviewName',
+      title: 'Page Preview Name',
+      type: 'string',
+      description: 'This is the name of the page shown in the preview list.',
+      validation: Rule => Rule.required().error('Page preview name is required'),
+    },
+    {
+      name: 'orderRank',
+      type: 'string',
+      hidden: true,
+    },
+    {
       name: 'title',
       title: 'Page Title',
       type: 'text',
@@ -36,13 +48,11 @@ const contactPage = {
   ],
   preview: {
     select: {
-      title: 'title',
-      subtitle: 'contactTypes',
+      title: 'pagePreviewName',
     },
-    prepare({ title, subtitle }) {
+    prepare({ title }) {
       return {
-        title: title || 'Untitled Contact Page',
-        subtitle: `${subtitle?.length || 0} contact types`,
+        title: title || 'Contact Content',
       };
     },
   },

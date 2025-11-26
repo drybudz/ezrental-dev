@@ -4,6 +4,18 @@ const servicesPage = {
   type: 'document',
   fields: [
     {
+      name: 'pagePreviewName',
+      title: 'Page Preview Name',
+      type: 'string',
+      description: 'This is the name of the page shown in the preview list.',
+      validation: Rule => Rule.required().error('Page preview name is required'),
+    },
+    {
+      name: 'orderRank',
+      type: 'string',
+      hidden: true,
+    },
+    {
       name: 'heroText',
       title: 'Services Hero Text',
       type: 'text',
@@ -101,8 +113,14 @@ const servicesPage = {
   ],
   preview: {
     select: {
-      title: 'heroText',
+      title: 'pagePreviewName',
       media: 'heroImage',
+    },
+    prepare({ title, media }) {
+      return {
+        title: title || 'Services Content',
+        media: media,
+      };
     },
   },
 };
