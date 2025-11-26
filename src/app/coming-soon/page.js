@@ -31,8 +31,8 @@ export default function ComingSoon() {
         <img
           src="/images/icon-loading.png"
           alt="EZ Rental Logo"
-          width={120}
-          height={120}
+          width={90}
+          height={90}
           className={styles.logo}
         />
       </div>

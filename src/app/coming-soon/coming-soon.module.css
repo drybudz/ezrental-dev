@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .logo {
@@ -34,7 +34,7 @@
 
 .text {
   font-family: var(--font-superclarendon), sans-serif;
-  font-size: 48px;
+  font-size: 36px;
   font-weight: 400;
   color: #E8EAE1;
   letter-spacing: -0.32px;
@@ -44,11 +44,11 @@
 
 @media (max-width: 768px) {
   .text {
-    font-size: 36px;
+    font-size: 27px;
   }
 
   .logoWrapper {
-    margin-bottom: 30px;
+    margin-bottom: 22.5px;
   }
 }
 
