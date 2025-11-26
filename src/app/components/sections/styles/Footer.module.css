@@ -21,7 +21,7 @@
 .coordinates {
   font-family: var(--font-geogrotesque), sans-serif;
   font-weight: 600;
-  font-size: 60px;
+  font-size: 48px;
   color: #231F20;
 }
 
@@ -37,7 +37,7 @@
 .phone {
   font-family: var(--font-superclarendon), serif;
   font-weight: 400;
-  font-size: 60px;
+  font-size: 48px;
   color: #231F20;
 }
 
@@ -195,17 +195,17 @@
   .orangeBar {
     padding: 16px;
   }
-  
+
   .blackBar {
     padding: 24px;
   }
-  
+
   .blackBarContent {
     grid-template-columns: 1fr;
     gap: 24px;
     text-align: center;
   }
-  
+
   .rightContent {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -214,29 +214,31 @@
     width: 100%;
     margin-left: 0;
   }
-  
+
   .socialMedia {
     order: 1;
+    flex-direction: row;
+    gap: 130px;
   }
-  
+
   .email {
     order: 2;
   }
-  
+
   .additionalLinks {
     order: 3;
   }
-  
+
   /* Responsive font sizes handled by max() calculation */
-  
+
   .socialLink {
     font-size: 24px;
   }
-  
+
   .emailLink {
     font-size: 24px;
   }
-  
+
   .additionalLink,
   .additionalText {
     font-size: 24px;
@@ -246,26 +248,26 @@
 /* Mobile Navigation (XS: 0px-575px) */
 @media (max-width: 575px) {
   .orangeBarContent {
-    flex-direction: column;
     gap: 8px;
     text-align: center;
   }
-  
+
   .blackBarContent {
     text-align: center;
   }
-  
+
   .rightContent {
     justify-content: center;
     width: 100%;
     margin-left: 0;
   }
-  
+
   .socialMedia,
   .emailAndCompany {
     align-items: center;
   }
-  
+
+
   .additionalLinks {
     justify-content: space-between;
   }
@@ -273,54 +275,85 @@
 
 /* Responsive font sizes using media queries - 50% minimum */
 @media (max-width: 1200px) {
-  .coordinates {
-    font-size: 55px;
-  }
-  
+
+  .coordinates,
   .phone {
-    font-size: 55px;
+    font-size: 42px;
   }
 }
 
 @media (max-width: 992px) {
-  .phone, .coordinates {
+
+  .phone,
+  .coordinates {
     font-size: 40px;
   }
 }
 
 @media (max-width: 768px) {
-  .phone, .coordinates {
+
+  .phone,
+  .coordinates {
     font-size: 30px;
   }
 }
 
-@media (max-width: 576px) {
-  .coordinates {
-    font-size: 40px;
-  }
-  
+@media (max-width: 575px) {
+
+  .coordinates,
   .phone {
-    font-size: 40px;
+    font-size: 25px;
+  }
+
+  .blackBarContent {
+    padding: 30px 0px;
+  }
+
+  .socialMedia {
+    gap: 130px;
   }
 }
 
 @media (max-width: 480px) {
-  .coordinates {
-    font-size: 36px;
-  }
-  
+
+  .coordinates,
   .phone {
-    font-size: 36px;
+    font-size: 20px;
   }
 }
 
 @media (max-width: 375px) {
 
-  .coordinates {
-    font-size: 32px;
+  .coordinates,
+  .phone,
+  .emailLink,
+  .additionalLink,
+  .additionalText,
+  .socialLink {
+    font-size: 16px;
   }
-  
-  .emailLink, .additionalLink, .additionalText {
-    font-size: 19px;
+
+  .rightContent {
+    gap: 8px;
+  }
+
+  .socialMedia {
+    gap: 90px;
+  }
+}
+
+@media (max-width: 320px) {
+
+  .coordinates,
+  .phone {
+    font-size: 16px;
+  }
+
+  .blackBarContent {
+    padding: 30px 0px;
+  }
+
+  .socialMedia {
+    gap: 90px;
   }
 }
