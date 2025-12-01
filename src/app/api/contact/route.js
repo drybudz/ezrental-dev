@@ -29,8 +29,8 @@ export async function POST(request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     // onboarding@resend.dev will change to contact@ezrentalandservices.com once I have set up the domain & email in resend.
     await resend.emails.send({
-      from: 'EZ Rental Contact <onboarding@resend.dev>',
-      to: ['keno10cr@gmail.com'],
+      from: 'EZ Rental Contact <contact@ezrentalandservices.com>',
+      to: ['keno10cr@gmail.com', 'contact@ezrentalandservices.com', 'sarah@ezrentalandservices.com', 'charlieacarlson@gmail.com'],
       subject: `New contact submission${contactType ? ` - ${contactType}` : ''}`,
       replyTo: email,
       text: `Name: ${name}
