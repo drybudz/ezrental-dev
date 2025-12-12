@@ -81,6 +81,13 @@ const servicesPage = {
               type: 'text',
               description: 'The description of the service.',
             },
+            {
+              name: 'servicesDetails',
+              title: 'Services Details',
+              type: 'array',
+              of: [{ type: 'text' }],
+              description: 'List of service details to display inline with circles between items. Use line breaks to separate groups (no dots will appear between line breaks).',
+            },
           ],
           preview: {
             select: {

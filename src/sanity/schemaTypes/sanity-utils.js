@@ -235,7 +235,8 @@ export async function getAllEZRentalData() {
           },
           services[]{
             title,
-            description
+            description,
+            servicesDetails
           },
           quoteTitle,
           quoteImage{

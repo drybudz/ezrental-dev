@@ -15,6 +15,7 @@ export default function QuoteSection({ quoteTitle, quoteImage }) {
   const titleRef = useRef(null);
   const sectionRef = useRef(null);
   const imageWrapperRef = useRef(null);
+  const imageInnerRef = useRef(null);
   const [animationSide, setAnimationSide] = useState(null);
 
   useEffect(() => {
@@ -78,22 +79,28 @@ export default function QuoteSection({ quoteTitle, quoteImage }) {
     };
   }, []);
 
-  // Parallax effect for image
+
+  // Opacity animation for imageInner
   useEffect(() => {
-    if (!imageWrapperRef.current || !sectionRef.current || !quoteImage) return;
+    if (!imageInnerRef.current || !sectionRef.current || !quoteImage) return;
 
     const ctx = gsap.context(() => {
-      // Parallax movement - wrapper moves as you scroll (similar to Methodology)
-      gsap.to(imageWrapperRef.current, {
-        yPercent: -30, // Move wrapper up 30% to create subtle parallax effect
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom', // Start when top of section hits bottom of viewport
-          end: 'bottom top', // End when bottom of section hits top of viewport
-          scrub: true, // Smooth scrubbing for parallax
+      // Animate opacity from 30% to 100% as you scroll
+      gsap.fromTo(imageInnerRef.current, 
+        {
+          opacity: 0.3, // Start at 30% opacity
         },
-      });
+        {
+          opacity: 1, // End at 100% opacity
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom', // Start when top of section hits bottom of viewport
+            end: 'top 50%', // End when top of section hits middle of viewport
+            scrub: true, // Smooth scrubbing tied to scroll position
+          },
+        }
+      );
     }, sectionRef);
 
     return () => {
@@ -122,7 +129,7 @@ export default function QuoteSection({ quoteTitle, quoteImage }) {
       {quoteImage?.asset?.url && (
         <div className={styles.imageContainer}>
           <div ref={imageWrapperRef} className={styles.imageWrapper}>
-            <div className={styles.imageInner}>
+            <div ref={imageInnerRef} className={styles.imageInner}>
               <Image
                 src={quoteImage.asset.url}
                 alt={quoteImage.alt || 'Quote section image'}

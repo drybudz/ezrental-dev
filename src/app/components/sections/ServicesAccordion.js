@@ -18,6 +18,7 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
   const containerRef = useRef(null);
   const imageRef = useRef(null);
   const accordionRefs = useRef([]);
+  const detailsRefs = useRef([]);
 
   // Detect mobile
   useEffect(() => {
@@ -37,6 +38,7 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
 
       const content = ref.querySelector(`.${styles.accordionContent}`);
       const title = ref.querySelector(`.${styles.accordionTitle}`);
+      const detailsContainer = ref.querySelector(`.${styles.accordionDetails}`);
       if (!content || !title) return;
 
       const isOpen = openIndex === index;
@@ -49,6 +51,25 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
           opacity: 1,
           y: 0,
         });
+
+        // Animate details with stagger
+        if (detailsContainer) {
+          const detailItems = detailsContainer.querySelectorAll(`.${styles.detailItem}`);
+          gsap.fromTo(detailItems, 
+            {
+              opacity: 0,
+              y: 10,
+            },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: 'power2.out',
+              stagger: 0.10,
+              delay: 0.2, // Start after content opens
+            }
+          );
+        }
       } else {
         gsap.to(content, {
           height: 0,
@@ -61,6 +82,15 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
           duration: 1.3,
           ease: 'power3.out',
         });
+
+        // Hide details when closing
+        if (detailsContainer) {
+          const detailItems = detailsContainer.querySelectorAll(`.${styles.detailItem}`);
+          gsap.set(detailItems, {
+            opacity: 0,
+            y: 10,
+          });
+        }
       }
     });
   }, [openIndex]);
@@ -142,6 +172,30 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
                 <div className={styles.accordionDescription}>
                   {service.description}
                 </div>
+                {service.servicesDetails && service.servicesDetails.length > 0 && (
+                  <div className={styles.accordionDetails}>
+                    {service.servicesDetails.flatMap((detail, detailIndex) => {
+                      // Split each detail by line breaks
+                      const lines = detail.split('\n').filter(line => line.trim());
+                      return lines.map((line, lineIndex) => {
+                        const isLastLineInDetail = lineIndex === lines.length - 1;
+                        const isLastDetail = detailIndex === service.servicesDetails.length - 1;
+                        // Only add separator if this is the last line of this detail AND there are more details
+                        const shouldAddSeparator = isLastLineInDetail && !isLastDetail;
+                        
+                        return (
+                          <span key={`${detailIndex}-${lineIndex}`} className={styles.detailItem}>
+                            {line.trim().toUpperCase()}
+                            {shouldAddSeparator && (
+                              <span className={styles.detailSeparator}> • </span>
+                            )}
+                            {!isLastLineInDetail && <br />}
+                          </span>
+                        );
+                      });
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           ))}
