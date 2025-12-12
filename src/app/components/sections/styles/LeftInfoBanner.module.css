@@ -61,14 +61,14 @@
 /* Title */
 .title {
   font-family: var(--font-geogrotesque);
-  font-size: 40px;
+  font-size: 85px;
   font-weight: 600;
   line-height: 90%;
   color: #E8EAE1;
   margin: 0 0 50px 0;
   text-transform: uppercase;
-  white-space: pre-wrap;
   text-wrap: balance;
+  /* width: 566px; */
 }
 
 /* Description */
@@ -80,9 +80,21 @@
   color: #E8EAE1;
   margin: 0;
   letter-spacing: -0.64px;
-  white-space: pre-wrap;
   text-wrap: balance;
   max-width: 600px;
+}
+
+/* Desktop only - white-space pre-wrap for title and description */
+@media (min-width: 769px) {
+  .title {
+    /* To match line breaks from Sanity's Studio - desktop only */
+    white-space: pre-wrap;
+  }
+  
+  .description {
+    /* To match line breaks from Sanity's Studio - desktop only */
+    white-space: pre-wrap;
+  }
 }
 
 /* CTA Button */

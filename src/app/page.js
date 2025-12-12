@@ -8,7 +8,8 @@ import CenteredOrangeContentGSAP from "./components/sections/CenteredOrangeConte
 // import HorizontalShowcaseGSAP from "./components/sections/HorizontalShowcaseGSAP";
 import HorizontalShowcaseGalleryGSAP from "./components/sections/HorizontalShowcaseGalleryGSAP";
 import Methodology from "./components/sections/Methodology";
-import FiftyContact from "./components/sections/FiftyContact";
+import LeftInfoBanner from "./components/sections/LeftInfoBanner";
+// import FiftyContact from "./components/sections/FiftyContact";
 import Footer from "./components/sections/Footer";
 
 export default function Home() {
@@ -57,8 +58,11 @@ export default function Home() {
       {/* Methodology Section */}
       <Methodology methodology={homePageData?.methodology} />
       
-      {/* 50Contact Section */}
-      <FiftyContact fiftyContact={homePageData?.fiftyContact} />
+      {/* Left Info Banner Section */}
+      <LeftInfoBanner leftInfoBanner={homePageData?.leftInfoBanner} />
+      
+      {/* 50Contact Section - commented out */}
+      {/* <FiftyContact fiftyContact={homePageData?.fiftyContact} /> */}
       
       {/* Footer Section */}
       <Footer footerData={homePageData} />

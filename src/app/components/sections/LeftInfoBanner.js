@@ -29,8 +29,12 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Set initial state
-      gsap.set([headerRef.current, titleRef.current, descriptionRef.current, ctaRef.current], {
+      // Set initial state - only animate elements that exist
+      const elementsToAnimate = [titleRef.current, ctaRef.current].filter(Boolean);
+      if (headerRef.current) elementsToAnimate.push(headerRef.current);
+      if (descriptionRef.current) elementsToAnimate.push(descriptionRef.current);
+      
+      gsap.set(elementsToAnimate, {
         opacity: 0,
         x: -100
       });
@@ -41,13 +45,15 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
         start: 'top 80%',
         end: 'bottom -10%',
         onEnter: () => {
-          // Header animation
-          gsap.to(headerRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: 'power2.out'
-          });
+          // Header animation (if exists)
+          if (headerRef.current) {
+            gsap.to(headerRef.current, {
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: 'power2.out'
+            });
+          }
           
           // Title animation
           gsap.to(titleRef.current, {
@@ -55,29 +61,38 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
             x: 0,
             duration: 0.8,
             ease: 'power2.out',
-            delay: 0.2
+            delay: headerRef.current ? 0.2 : 0
           });
           
-          // Description animation
-          gsap.to(descriptionRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: 0.4
-          });
+          // Description animation (if exists)
+          if (descriptionRef.current) {
+            gsap.to(descriptionRef.current, {
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: 'power2.out',
+              delay: headerRef.current ? 0.4 : 0.2
+            });
+          }
           
           // CTA animation with delay
-          gsap.to(ctaRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: 0.6
-          });
+          if (ctaRef.current) {
+            gsap.to(ctaRef.current, {
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: 'power2.out',
+              delay: headerRef.current ? 0.6 : (descriptionRef.current ? 0.4 : 0.2)
+            });
+          }
         },
         onLeave: () => {
-          gsap.to([headerRef.current, titleRef.current, descriptionRef.current, ctaRef.current], {
+          const elementsToReset = [titleRef.current].filter(Boolean);
+          if (headerRef.current) elementsToReset.push(headerRef.current);
+          if (descriptionRef.current) elementsToReset.push(descriptionRef.current);
+          if (ctaRef.current) elementsToReset.push(ctaRef.current);
+          
+          gsap.to(elementsToReset, {
             opacity: 0,
             x: -100,
             duration: 0.4,
@@ -85,36 +100,47 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
           });
         },
         onEnterBack: () => {
-          gsap.to(headerRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: 'power2.out'
-          });
+          if (headerRef.current) {
+            gsap.to(headerRef.current, {
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: 'power2.out'
+            });
+          }
           gsap.to(titleRef.current, {
             opacity: 1,
             x: 0,
             duration: 0.8,
             ease: 'power2.out',
-            delay: 0.2
+            delay: headerRef.current ? 0.2 : 0
           });
-          gsap.to(descriptionRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: 0.4
-          });
-          gsap.to(ctaRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: 0.6
-          });
+          if (descriptionRef.current) {
+            gsap.to(descriptionRef.current, {
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: 'power2.out',
+              delay: headerRef.current ? 0.4 : 0.2
+            });
+          }
+          if (ctaRef.current) {
+            gsap.to(ctaRef.current, {
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: 'power2.out',
+              delay: headerRef.current ? 0.6 : (descriptionRef.current ? 0.4 : 0.2)
+            });
+          }
         },
         onLeaveBack: () => {
-          gsap.to([headerRef.current, titleRef.current, descriptionRef.current, ctaRef.current], {
+          const elementsToReset = [titleRef.current].filter(Boolean);
+          if (headerRef.current) elementsToReset.push(headerRef.current);
+          if (descriptionRef.current) elementsToReset.push(descriptionRef.current);
+          if (ctaRef.current) elementsToReset.push(ctaRef.current);
+          
+          gsap.to(elementsToReset, {
             opacity: 0,
             x: -100,
             duration: 0.4,
@@ -146,8 +172,8 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
       
       <div className={styles.contentWrapper}>
         <div className={styles.contentContainer}>
-          {/* Header */}
-          {header && (
+          {/* Header - only render if header exists */}
+          {header?.trim() && (
             <div ref={headerRef} className={styles.header}>{header}</div>
           )}
 
@@ -156,8 +182,8 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
             <h2 ref={titleRef} className={styles.title}>{title}</h2>
           )}
 
-          {/* Description */}
-          {description && (
+          {/* Description - only render if description exists */}
+          {description?.trim() && (
             <p ref={descriptionRef} className={styles.description}>{description}</p>
           )}
 

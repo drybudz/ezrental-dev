@@ -2,10 +2,10 @@
 
 import { useAppContext, Loading } from "../components/AppContext";
 import HeroBanner from "../components/sections/HeroBanner";
-import AboutSection from "../components/sections/AboutSection";
+// import AboutSection from "../components/sections/AboutSection";
 import FiftySection from "../components/sections/FiftySection";
-import QuoteSection from "../components/sections/QuoteSection";
-import LeftInfoBanner from "../components/sections/LeftInfoBanner";
+// import QuoteSection from "../components/sections/QuoteSection";
+// import LeftInfoBanner from "../components/sections/LeftInfoBanner";
 import Footer from "../components/sections/Footer";
 
 export default function About() {
@@ -25,13 +25,20 @@ export default function About() {
         heroText={aboutPageData?.heroText}
         heroImage={aboutPageData?.heroImage}
       />
-      <AboutSection aboutSection={aboutPageData?.aboutSection} />
-      <QuoteSection 
+      {/* AboutSection - commented out */}
+      {/* <AboutSection aboutSection={aboutPageData?.aboutSection} /> */}
+      
+      {/* QuoteSection - commented out */}
+      {/* <QuoteSection 
         quoteTitle={aboutPageData?.quoteTitle}
         quoteImage={aboutPageData?.quoteImage}
-      />
+      /> */}
+      
       <FiftySection fiftySection={aboutPageData?.fiftySection} />
-      <LeftInfoBanner leftInfoBanner={aboutPageData?.leftInfoBanner} />
+      
+      {/* LeftInfoBanner - commented out (moved to home page) */}
+      {/* <LeftInfoBanner leftInfoBanner={aboutPageData?.leftInfoBanner} /> */}
+      
       <Footer footerData={homePageData} />
     </div>
   );

@@ -22,6 +22,12 @@ const servicesPage = {
       description: 'The main, prominent text for the services hero section.',
     },
     {
+      name: 'heroDescription',
+      title: 'Services Hero Description',
+      type: 'text',
+      description: 'Optional description text below the hero text. Will be hidden if empty.',
+    },
+    {
       name: 'heroImage',
       title: 'Services Hero Image',
       type: 'image',

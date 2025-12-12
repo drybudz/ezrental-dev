@@ -548,8 +548,77 @@ const homePage = {
       validation: Rule => Rule.max(2),
       group: 'footer',
     },
-    
 
+    // --- Left Info Banner Section ---
+    {
+      name: 'leftInfoBanner',
+      title: 'Left Info Banner',
+      type: 'object',
+      group: 'content',
+      fields: [
+        {
+          name: 'header',
+          title: 'Header',
+          type: 'string',
+          description: 'Optional header text above the title. Will be hidden if empty.',
+        },
+        {
+          name: 'image',
+          title: 'Background Image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+            },
+          ],
+        },
+        {
+          name: 'title',
+          title: 'Title',
+          type: 'text',
+          description: 'Main title for the banner (40px font size).',
+        },
+        {
+          name: 'description',
+          title: 'Description',
+          type: 'text',
+          description: 'Optional description text for the banner. Will be hidden if empty.',
+        },
+        {
+          name: 'cta',
+          title: 'Call to Action',
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              title: 'Button Text',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'Button URL',
+              type: 'string',
+            },
+            {
+              name: 'target',
+              title: 'Link Target',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Same Window', value: '_self' },
+                  { title: 'New Window', value: '_blank' },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    },
   ],
 
   // Preview configuration for the Sanity Studio document list

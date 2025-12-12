@@ -28,7 +28,8 @@ export default function HeroBannerGSAP({ heroText, heroImage, loaderFinished }) 
 
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    // Only run animation if heroText exists and refs are available
+    if (!heroText?.trim() || !containerRef.current || !textRef.current) return;
 
     const ctx = gsap.context(() => {
       // Set initial state
@@ -53,7 +54,7 @@ export default function HeroBannerGSAP({ heroText, heroImage, loaderFinished }) 
       ctx.revert();
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [heroText]);
 
   return (
     <section className={styles.heroBanner} ref={containerRef}>
@@ -69,11 +70,13 @@ export default function HeroBannerGSAP({ heroText, heroImage, loaderFinished }) 
             />
           )}
         </div>
-        <div className={styles.textOverlay}>
-          <h1 className={styles.heroText} ref={textRef}>
-            {heroText || 'DOLOR SIT AMET, CONSEC ADIPISCING ELIT. SED VIVAMUS SAGITTIS UT EST SIT AMET TRISTIQUE.'}
-          </h1>
-        </div>
+        {heroText?.trim() && (
+          <div className={styles.textOverlay}>
+            <h1 className={styles.heroText} ref={textRef}>
+              {heroText}
+            </h1>
+          </div>
+        )}
       </div>
     </section>
   );

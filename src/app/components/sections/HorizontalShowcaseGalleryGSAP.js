@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
+import { urlFor } from '../../../sanity/lib/image';
 import styles from './styles/HorizontalShowcaseGallery.module.css';
 
 export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
@@ -179,11 +180,11 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
               <div className={styles.imageContainer} data-gallery-image>
                 {item?.image?.asset?.url && (
                   <Image
-                    src={item.image.asset.url}
+                    src={urlFor(item.image).width(1280).quality(90).url()}
                     alt={item.image.alt || item.title || 'Gallery item'}
-                    width={480}
-                    height={684}
+                    fill
                     className={styles.image}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     priority={slotIdx < 2}
                   />
                 )}

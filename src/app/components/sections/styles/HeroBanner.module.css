@@ -31,7 +31,7 @@
 
 .heroText {
     color: #E8EAE1;
-    font-size: 64px;
+    font-size: 85px;
     font-family: var(--font-geogrotesque), sans-serif;
     font-weight: 600;
     text-transform: uppercase;
@@ -43,16 +43,43 @@
     text-wrap: balance;
 }
 
+.heroDescription {
+    color: #E8EAE1;
+    font-size: 22px;
+    font-family: var(--font-superclarendon), serif;
+    font-weight: 400;
+    line-height: 118%;
+    letter-spacing: -0.32px;
+    margin: 32px 0 0;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    text-wrap: balance;
+}
+
 /* Responsive font sizes using media queries - 50% minimum */
+@media (min-width: 769px) {
+    .heroDescription {
+        /* To match line breaks from Sanity's Studio - desktop only */
+        white-space: pre-wrap;
+    }
+}
+
 @media (max-width: 1200px) {
     .heroText {
         font-size: 58px;
+    }
+    
+    .heroDescription {
+        font-size: 20px;
     }
 }
 
 @media (max-width: 992px) {
     .heroText {
         font-size: 52px;
+    }
+    
+    .heroDescription {
+        font-size: 20px;
     }
 }
 
@@ -62,16 +89,30 @@
         white-space: normal; /* override pre-wrap on small screens */
         text-wrap: wrap;     /* override balance */
     }
+    
+    .heroDescription {
+        font-size: 18px;
+        white-space: normal;
+        text-wrap: wrap;
+    }
 }
 
 @media (max-width: 576px) {
     .heroText {
         font-size: 40px;
     }
+    
+    .heroDescription {
+        font-size: 16px;
+    }
 }
 
 @media (max-width: 480px) {
     .heroText {
         font-size: 45px;
+    }
+    
+    .heroDescription {
+        font-size: 17px;
     }
 }

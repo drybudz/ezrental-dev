@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import styles from './styles/HeroBanner.module.css';
 
-export default function HeroBanner({ heroText, heroImage }) {
+export default function HeroBanner({ heroText, heroImage, heroDescription }) {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -32,17 +32,30 @@ export default function HeroBanner({ heroText, heroImage }) {
       )}
       
       {/* Overlay Text */}
-      {heroText?.trim() && (
+      {(heroText?.trim() || heroDescription?.trim()) && (
         <div className={styles.textOverlay}>
-          <h1 
-            className={styles.heroText}
-            style={{
-              opacity: opacity,
-              transform: `translateY(${translateY}px)`
-            }}
-          >
-            {heroText}
-          </h1>
+          {heroText?.trim() && (
+            <h1 
+              className={styles.heroText}
+              style={{
+                opacity: opacity,
+                transform: `translateY(${translateY}px)`
+              }}
+            >
+              {heroText}
+            </h1>
+          )}
+          {heroDescription?.trim() && (
+            <p 
+              className={styles.heroDescription}
+              style={{
+                opacity: opacity,
+                transform: `translateY(${translateY}px)`
+              }}
+            >
+              {heroDescription}
+            </p>
+          )}
         </div>
       )}
     </section>

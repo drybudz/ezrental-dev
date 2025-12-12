@@ -14,6 +14,7 @@ if (typeof window !== 'undefined') {
 export default function QuoteSection({ quoteTitle, quoteImage }) {
   const titleRef = useRef(null);
   const sectionRef = useRef(null);
+  const imageWrapperRef = useRef(null);
   const [animationSide, setAnimationSide] = useState(null);
 
   useEffect(() => {
@@ -77,6 +78,34 @@ export default function QuoteSection({ quoteTitle, quoteImage }) {
     };
   }, []);
 
+  // Parallax effect for image
+  useEffect(() => {
+    if (!imageWrapperRef.current || !sectionRef.current || !quoteImage) return;
+
+    const ctx = gsap.context(() => {
+      // Parallax movement - wrapper moves as you scroll (similar to Methodology)
+      gsap.to(imageWrapperRef.current, {
+        yPercent: -30, // Move wrapper up 30% to create subtle parallax effect
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom', // Start when top of section hits bottom of viewport
+          end: 'bottom top', // End when bottom of section hits top of viewport
+          scrub: true, // Smooth scrubbing for parallax
+        },
+      });
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.vars && trigger.vars.trigger === sectionRef.current) {
+          trigger.kill();
+        }
+      });
+    };
+  }, [quoteImage]);
+
   if (!quoteTitle && !quoteImage) {
     return null;
   }
@@ -92,13 +121,17 @@ export default function QuoteSection({ quoteTitle, quoteImage }) {
       )}
       {quoteImage?.asset?.url && (
         <div className={styles.imageContainer}>
-          <Image
-            src={quoteImage.asset.url}
-            alt={quoteImage.alt || 'Quote section image'}
-            width={1920}
-            height={1080}
-            className={styles.image}
-          />
+          <div ref={imageWrapperRef} className={styles.imageWrapper}>
+            <div className={styles.imageInner}>
+              <Image
+                src={quoteImage.asset.url}
+                alt={quoteImage.alt || 'Quote section image'}
+                fill
+                className={styles.image}
+                sizes="100vw"
+              />
+            </div>
+          </div>
         </div>
       )}
     </section>

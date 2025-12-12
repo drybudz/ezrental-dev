@@ -33,7 +33,11 @@ export default function FiftySection({ fiftySection }) {
         opacity: 0,
         x: -100 // Start from left
       });
-      gsap.set([headerRef.current, descriptionRef.current, ctaRef.current], { 
+      
+      const elementsFromRight = [descriptionRef.current, ctaRef.current].filter(Boolean);
+      if (headerRef.current) elementsFromRight.push(headerRef.current);
+      
+      gsap.set(elementsFromRight, { 
         opacity: 0,
         x: 100 // Start from right
       });
@@ -53,13 +57,15 @@ export default function FiftySection({ fiftySection }) {
           });
           
           // Header, description, and CTA slide from right (slower)
-          gsap.to(headerRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 1.5,
-            ease: "power2.out",
-            delay: 0.2
-          });
+          if (headerRef.current) {
+            gsap.to(headerRef.current, {
+              opacity: 1,
+              x: 0,
+              duration: 1.5,
+              ease: "power2.out",
+              delay: 0.2
+            });
+          }
           
           gsap.to(descriptionRef.current, {
             opacity: 1,
@@ -85,7 +91,9 @@ export default function FiftySection({ fiftySection }) {
             duration: 0.4,
             ease: "power2.in"
           });
-          gsap.to([headerRef.current, descriptionRef.current, ctaRef.current], {
+          const elementsToReset = [descriptionRef.current, ctaRef.current].filter(Boolean);
+          if (headerRef.current) elementsToReset.push(headerRef.current);
+          gsap.to(elementsToReset, {
             opacity: 0,
             x: 100,
             duration: 0.4,
@@ -101,13 +109,15 @@ export default function FiftySection({ fiftySection }) {
             ease: "power2.out"
           });
           
-          gsap.to(headerRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 1.5,
-            ease: "power2.out",
-            delay: 0.2
-          });
+          if (headerRef.current) {
+            gsap.to(headerRef.current, {
+              opacity: 1,
+              x: 0,
+              duration: 1.5,
+              ease: "power2.out",
+              delay: 0.2
+            });
+          }
           
           gsap.to(descriptionRef.current, {
             opacity: 1,
@@ -133,7 +143,9 @@ export default function FiftySection({ fiftySection }) {
             duration: 0.4,
             ease: "power2.in"
           });
-          gsap.to([headerRef.current, descriptionRef.current, ctaRef.current], {
+          const elementsToReset = [descriptionRef.current, ctaRef.current].filter(Boolean);
+          if (headerRef.current) elementsToReset.push(headerRef.current);
+          gsap.to(elementsToReset, {
             opacity: 0,
             x: 100,
             duration: 0.4,
@@ -165,8 +177,8 @@ export default function FiftySection({ fiftySection }) {
 
       {/* Right Column - Content */}
       <div className={styles.contentColumn}>
-        {/* Header */}
-        {header && (
+        {/* Header - only render if header exists */}
+        {header?.trim() && (
           <div ref={headerRef} className={styles.header}>{header}</div>
         )}
 

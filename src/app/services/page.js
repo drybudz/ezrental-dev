@@ -21,6 +21,7 @@ export default function Services() {
     <div className="servicesPage">
       <HeroBanner 
         heroText={servicesPageData?.heroText}
+        heroDescription={servicesPageData?.heroDescription}
         heroImage={servicesPageData?.heroImage}
       />
       <ServicesAccordion 
