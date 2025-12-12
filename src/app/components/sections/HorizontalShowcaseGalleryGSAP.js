@@ -7,6 +7,7 @@ import styles from './styles/HorizontalShowcaseGallery.module.css';
 export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
   const containerRef = useRef(null);
   const itemsRefs = useRef([]);
+  const itemsDataRef = useRef(null); // Store items reference to avoid dependency issues
   const [displayedIndices, setDisplayedIndices] = useState([]);
   const [nextItemIndex, setNextItemIndex] = useState(0);
   const [lastReplacedSlot, setLastReplacedSlot] = useState(null);
@@ -17,6 +18,8 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
   }
 
   const items = horizontalShowcase.items;
+  // Update ref when items change (only length matters for effects)
+  itemsDataRef.current = items;
 
   // Get random delay between 5-7 seconds
   const getRandomDelay = () => Math.random() * 2000 + 5000; // 5000-7000ms
@@ -33,7 +36,8 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
 
   // Rotation logic
   useEffect(() => {
-    if (displayedIndices.length === 0 || items.length <= displayedIndices.length) return;
+    const currentItems = itemsDataRef.current;
+    if (!currentItems || displayedIndices.length === 0 || currentItems.length <= displayedIndices.length) return;
 
     // Clear any existing timeout
     if (timeoutRef.current) {
@@ -41,6 +45,9 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
     }
 
     const replaceRandomItem = () => {
+      const items = itemsDataRef.current;
+      if (!items) return;
+
       // Pick a different slot than the last one replaced (if exists)
       const availableSlots = lastReplacedSlot !== null
         ? displayedIndices.map((_, idx) => idx).filter((idx) => idx !== lastReplacedSlot)
@@ -102,7 +109,7 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [displayedIndices, nextItemIndex, items.length, items, lastReplacedSlot]);
+  }, [displayedIndices, nextItemIndex, items.length, lastReplacedSlot]);
 
   // Fade in only the replaced item's image when displayedIndices changes
   useEffect(() => {
@@ -110,6 +117,9 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
 
     const itemElement = itemsRefs.current[lastReplacedSlot];
     if (!itemElement) return;
+
+    const items = itemsDataRef.current;
+    if (!items) return;
 
     const itemIdx = displayedIndices[lastReplacedSlot];
     const item = items[itemIdx];
@@ -146,7 +156,7 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
 
     // Reset lastReplacedSlot after animation
     setLastReplacedSlot(null);
-  }, [displayedIndices, items, lastReplacedSlot]);
+  }, [displayedIndices, lastReplacedSlot]);
 
   if (displayedIndices.length === 0) {
     return null;
