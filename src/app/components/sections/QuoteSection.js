@@ -88,7 +88,7 @@ export default function QuoteSection({ quoteTitle, quoteImage }) {
       // Animate opacity from 30% to 100% as you scroll
       gsap.fromTo(imageInnerRef.current, 
         {
-          opacity: 0.3, // Start at 30% opacity
+          opacity: 0.1, // Start at 10% opacity
         },
         {
           opacity: 1, // End at 100% opacity
