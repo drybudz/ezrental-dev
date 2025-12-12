@@ -12,7 +12,9 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
   const [displayedIndices, setDisplayedIndices] = useState([]);
   const [nextItemIndex, setNextItemIndex] = useState(0);
   const [lastReplacedSlot, setLastReplacedSlot] = useState(null);
+  const [pendingImages, setPendingImages] = useState({}); // Track pending images for crossfade: { slotIndex: itemIndex }
   const timeoutRef = useRef(null);
+  const preloadTimeoutRef = useRef(null);
 
   if (!horizontalShowcase || !horizontalShowcase.items || horizontalShowcase.items.length === 0) {
     return null;
@@ -55,7 +57,7 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
         : displayedIndices.map((_, idx) => idx);
       const slotToReplace = availableSlots[Math.floor(Math.random() * availableSlots.length)];
 
-      // Get the item element to fade out
+      // Get the item element
       const itemElement = itemsRefs.current[slotToReplace];
       if (!itemElement) return;
 
@@ -79,26 +81,47 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
         nextIndex = (nextIndex + 1) >= items.length ? 0 : nextIndex + 1;
         attempts++;
       }
-      
-      // Fade out only the image of the selected item
-      const imageEl = itemElement.querySelector('[data-gallery-image]');
-      
-      if (imageEl) {
-        gsap.to(imageEl, {
-          opacity: 0,
-          duration: 0.5,
-          ease: 'power2.in',
-          onComplete: () => {
-            // Update displayed indices and track which slot was replaced
-            const newIndices = [...displayedIndices];
-            newIndices[slotToReplace] = nextIndex;
-            setDisplayedIndices(newIndices);
-            setLastReplacedSlot(slotToReplace);
-            // Set next item index (wrap around if needed)
-            setNextItemIndex((nextIndex + 1) >= items.length ? 0 : nextIndex + 1);
-          },
-        });
-      }
+
+      // Preload the next image 0.8s before starting the crossfade
+      setPendingImages(prev => ({ ...prev, [slotToReplace]: nextIndex }));
+
+      // Start crossfade after preload delay
+      preloadTimeoutRef.current = setTimeout(() => {
+        const oldImageEl = itemElement.querySelector('[data-gallery-image-old]');
+        const newImageEl = itemElement.querySelector('[data-gallery-image-new]');
+        
+        if (oldImageEl && newImageEl) {
+          // Crossfade: fade out old, fade in new simultaneously
+          gsap.to(oldImageEl, {
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.in',
+          });
+          
+          gsap.fromTo(newImageEl, 
+            { opacity: 0 },
+            {
+              opacity: 1,
+              duration: 0.8,
+              ease: 'power2.out',
+              onComplete: () => {
+                // Update displayed indices after crossfade completes
+                const newIndices = [...displayedIndices];
+                newIndices[slotToReplace] = nextIndex;
+                setDisplayedIndices(newIndices);
+                setLastReplacedSlot(slotToReplace);
+                setPendingImages(prev => {
+                  const updated = { ...prev };
+                  delete updated[slotToReplace];
+                  return updated;
+                });
+                // Set next item index (wrap around if needed)
+                setNextItemIndex((nextIndex + 1) >= items.length ? 0 : nextIndex + 1);
+              },
+            }
+          );
+        }
+      }, 800); // 0.8s preload delay
     };
 
     // Set timeout for next replacement
@@ -109,55 +132,47 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
+      if (preloadTimeoutRef.current) {
+        clearTimeout(preloadTimeoutRef.current);
+      }
     };
   }, [displayedIndices, nextItemIndex, items.length, lastReplacedSlot]);
 
-  // Fade in only the replaced item's image when displayedIndices changes
+  // Update title/description visibility when displayedIndices changes
   useEffect(() => {
-    if (lastReplacedSlot === null) return;
+    displayedIndices.forEach((itemIdx, slotIdx) => {
+      const itemElement = itemsRefs.current[slotIdx];
+      if (!itemElement) return;
 
-    const itemElement = itemsRefs.current[lastReplacedSlot];
-    if (!itemElement) return;
+      const items = itemsDataRef.current;
+      if (!items) return;
 
-    const items = itemsDataRef.current;
-    if (!items) return;
+      const item = items[itemIdx];
+      const hasTitle = item?.title?.trim();
+      const hasDescription = item?.description?.trim();
 
-    const itemIdx = displayedIndices[lastReplacedSlot];
-    const item = items[itemIdx];
-    const hasTitle = item?.title?.trim();
-    const hasDescription = item?.description?.trim();
+      const titleEl = itemElement.querySelector('[data-gallery-title]');
+      const descriptionEl = itemElement.querySelector('[data-gallery-description]');
 
-    // Find elements by data attribute
-    const imageEl = itemElement.querySelector('[data-gallery-image]');
-    const titleEl = itemElement.querySelector('[data-gallery-title]');
-    const descriptionEl = itemElement.querySelector('[data-gallery-description]');
-
-    // Fade in only the replaced item's image
-    if (imageEl) {
-      gsap.fromTo(imageEl, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' });
-    }
-
-    // Set title visibility (no animation)
-    if (titleEl) {
-      if (hasTitle) {
-        gsap.set(titleEl, { opacity: 1 });
-      } else {
-        gsap.set(titleEl, { opacity: 0 });
+      // Set title visibility (no animation)
+      if (titleEl) {
+        if (hasTitle) {
+          gsap.set(titleEl, { opacity: 1 });
+        } else {
+          gsap.set(titleEl, { opacity: 0 });
+        }
       }
-    }
 
-    // Set description visibility (no animation)
-    if (descriptionEl) {
-      if (hasDescription) {
-        gsap.set(descriptionEl, { opacity: 1 });
-      } else {
-        gsap.set(descriptionEl, { opacity: 0 });
+      // Set description visibility (no animation)
+      if (descriptionEl) {
+        if (hasDescription) {
+          gsap.set(descriptionEl, { opacity: 1 });
+        } else {
+          gsap.set(descriptionEl, { opacity: 0 });
+        }
       }
-    }
-
-    // Reset lastReplacedSlot after animation
-    setLastReplacedSlot(null);
-  }, [displayedIndices, lastReplacedSlot]);
+    });
+  }, [displayedIndices]);
 
   if (displayedIndices.length === 0) {
     return null;
@@ -177,16 +192,31 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
               className={styles.showcaseItem}
               ref={(el) => (itemsRefs.current[slotIdx] = el)}
             >
-              <div className={styles.imageContainer} data-gallery-image>
+              <div className={styles.imageContainer}>
+                {/* Current/old image layer - always show current image */}
                 {item?.image?.asset?.url && (
-                  <Image
-                    src={urlFor(item.image).width(1280).quality(90).url()}
-                    alt={item.image.alt || item.title || 'Gallery item'}
-                    fill
-                    className={styles.image}
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    priority={slotIdx < 2}
-                  />
+                  <div className={styles.imageLayer} data-gallery-image-old>
+                    <Image
+                      src={urlFor(item.image).width(1280).quality(90).url()}
+                      alt={item.image.alt || item.title || 'Gallery item'}
+                      fill
+                      className={styles.image}
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      priority={slotIdx < 2 && !pendingImages[slotIdx]}
+                    />
+                  </div>
+                )}
+                {/* New/pending image layer for crossfade - only show when there's a pending image */}
+                {pendingImages[slotIdx] !== undefined && items[pendingImages[slotIdx]]?.image?.asset?.url && (
+                  <div className={styles.imageLayer} data-gallery-image-new style={{ opacity: 0 }}>
+                    <Image
+                      src={urlFor(items[pendingImages[slotIdx]].image).width(1280).quality(90).url()}
+                      alt={items[pendingImages[slotIdx]].image.alt || items[pendingImages[slotIdx]].title || 'Gallery item'}
+                      fill
+                      className={styles.image}
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
                 )}
               </div>
               <div className={styles.content}>
