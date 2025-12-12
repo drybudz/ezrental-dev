@@ -32,17 +32,19 @@ export default function HeroBanner({ heroText, heroImage }) {
       )}
       
       {/* Overlay Text */}
-      <div className={styles.textOverlay}>
-        <h1 
-          className={styles.heroText}
-          style={{
-            opacity: opacity,
-            transform: `translateY(${translateY}px)`
-          }}
-        >
-          {heroText || 'BRAND MESSAGE LOREM IPSUM NEQUE PORRO — EST QUI DOLOREM IPSUM QUIA.'}
-        </h1>
-      </div>
+      {heroText?.trim() && (
+        <div className={styles.textOverlay}>
+          <h1 
+            className={styles.heroText}
+            style={{
+              opacity: opacity,
+              transform: `translateY(${translateY}px)`
+            }}
+          >
+            {heroText}
+          </h1>
+        </div>
+      )}
     </section>
   );
 }

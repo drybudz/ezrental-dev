@@ -142,12 +142,6 @@ const homePage = {
       type: 'object',
       fields: [
         {
-          name: 'title',
-          title: 'Section Title',
-          type: 'string',
-          description: 'Optional title for the entire showcase section.',
-        },
-        {
           name: 'items',
           title: 'Showcase Items',
           type: 'array',
@@ -179,15 +173,13 @@ const homePage = {
                   name: 'title',
                   title: 'Title',
                   type: 'string',
-                  description: 'Title for the showcase item (Geogrotesque Cond, 45px, line height 90%).',
-                  validation: Rule => Rule.required().max(50),
+                  description: 'Optional title for the showcase item (Geogrotesque Cond, 45px, line height 90%). Will be hidden if empty.',
                 },
                 {
                   name: 'description',
                   title: 'Short Description',
                   type: 'string',
-                  description: 'Short description (Superclarendon, 25px, letter spacing -0.32px, max of 7 words).',
-                  validation: Rule => Rule.required().max(50),
+                  description: 'Optional short description (Superclarendon, 25px, letter spacing -0.32px). Will be hidden if empty.',
                 },
               ],
               preview: {
@@ -196,28 +188,35 @@ const homePage = {
                   subtitle: 'description',
                   media: 'image',
                 },
+                prepare(selection) {
+                  const { title, subtitle, media } = selection;
+                  return {
+                    title: title || 'Untitled Item',
+                    subtitle: subtitle || 'No description',
+                    media: media,
+                  };
+                },
               },
             },
           ],
-          description: 'Add showcase items. Maximum 3 items recommended.',
-          validation: Rule => Rule.max(3),
+          description: 'Add at least 6 showcase items for the rotating gallery to work properly.',
+          validation: Rule => Rule.min(6).error('At least 6 showcase items are required for the rotating gallery.'),
         },
       ],
       preview: {
         select: {
-          title: 'title',
           subtitle: 'items',
         },
         prepare(selection) {
-          const { title, subtitle } = selection;
+          const { subtitle } = selection;
           const itemCount = subtitle ? subtitle.length : 0;
           return {
-            title: title || 'Horizontal Showcase',
+            title: 'Horizontal Showcase Gallery',
             subtitle: `${itemCount} item${itemCount !== 1 ? 's' : ''}`,
           };
         },
       },
-      description: 'Horizontal showcase section with up to 3 items. Displays as grid on desktop, slider on mobile.',
+      description: 'Horizontal showcase gallery with rotating items. Full-width display.',
       group: 'content',
     },
 
