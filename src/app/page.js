@@ -36,6 +36,7 @@ export default function Home() {
       <HeroBannerGSAP
         heroText={homePageData?.heroText}
         heroImage={homePageData?.heroImage}
+        heroVideo={homePageData?.heroVideo}
         loaderFinished={loaderFinished}
       />
 

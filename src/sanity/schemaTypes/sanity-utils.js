@@ -19,6 +19,13 @@ export async function getAllEZRentalData() {
             hotspot,
             alt
           },
+          heroVideo{
+            asset->{
+              url,
+              mimeType,
+              size
+            }
+          },
           loaderSettings{
             image{
               asset->{

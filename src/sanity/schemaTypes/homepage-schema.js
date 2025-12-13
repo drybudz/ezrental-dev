@@ -62,6 +62,16 @@ const homePage = {
       group: 'content',
     },
     {
+      name: 'heroVideo',
+      title: 'Home Hero Video',
+      type: 'file',
+      options: {
+        accept: 'video/mp4',
+      },
+      description: 'Optional. MP4 video file for the hero section. If provided, video will be displayed instead of the hero image. Falls back to image if video is not available.',
+      group: 'content',
+    },
+    {
       name: 'loaderSettings',
       title: 'Loader Settings',
       type: 'object',

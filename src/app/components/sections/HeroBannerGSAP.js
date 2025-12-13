@@ -11,10 +11,11 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function HeroBannerGSAP({ heroText, heroImage, loaderFinished }) {
+export default function HeroBannerGSAP({ heroText, heroImage, heroVideo, loaderFinished }) {
   const containerRef = useRef(null);
   const textRef = useRef(null);
   const heroSectionRef = useRef(null);
+  const videoRef = useRef(null);
 
   // Fade in hero section when loader is finished
   useEffect(() => {
@@ -60,12 +61,31 @@ export default function HeroBannerGSAP({ heroText, heroImage, loaderFinished }) 
   // Generate image URL with crop and get hotspot position
   const imageUrl = heroImage?.asset ? urlFor(heroImage).url() : null;
   const objectPosition = heroImage?.hotspot ? getHotspotPosition(heroImage.hotspot) : 'center';
+  
+  // Get video URL if available
+  const videoUrl = heroVideo?.asset?.url || null;
+  const hasVideo = !!videoUrl;
+  const hasImage = !!imageUrl;
 
   return (
     <section className={styles.heroBanner} ref={containerRef}>
       <div ref={heroSectionRef} style={{ opacity: 0 }}>
         <div className={styles.backgroundImage}>
-          {imageUrl && (
+          {hasVideo ? (
+            <video
+              ref={videoRef}
+              className={styles.heroVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={imageUrl || undefined}
+              style={{ objectPosition }}
+            >
+              <source src={videoUrl} type="video/mp4" />
+              {/* Fallback: if video fails, browser will show poster image */}
+            </video>
+          ) : hasImage ? (
             <Image
               src={imageUrl}
               alt={heroImage?.alt || 'Hero background'}
@@ -74,7 +94,7 @@ export default function HeroBannerGSAP({ heroText, heroImage, loaderFinished }) 
               priority
               style={{ objectPosition }}
             />
-          )}
+          ) : null}
         </div>
         {heroText?.trim() && (
           <div className={styles.textOverlay}>
