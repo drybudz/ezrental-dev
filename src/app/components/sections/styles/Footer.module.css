@@ -5,7 +5,7 @@
 /* Orange Bar */
 .orangeBar {
   background-color: #F7550C;
-  padding: 11px 32px;
+  padding: 12px 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,6 +16,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1820px;
+  margin: 0 auto;
+  padding: 0 100px;
 }
 
 .coordinates {
@@ -49,7 +52,7 @@
 /* Black Bar */
 .blackBar {
   background-color: #231F20;
-  padding: 66px 32px 32px;
+  padding: 66px 0px 66px 0px;
 }
 
 .blackBarContent {
@@ -59,7 +62,7 @@
   align-items: center;
   max-width: 1820px;
   margin: 0 auto;
-  padding: 30px 20px 0 20px;
+  padding: 30px 100px 0;
 }
 
 /* Right Content */
@@ -104,7 +107,7 @@
   grid-template-columns: auto 1fr;
   gap: 32px;
   align-items: center;
-  padding-right: 3%;
+  /* padding-right: 3%; */
 }
 
 /* Social Media */

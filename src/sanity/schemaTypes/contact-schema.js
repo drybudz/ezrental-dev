@@ -22,6 +22,12 @@ const contactPage = {
       description: 'The main title for the contact page',
     },
     {
+      name: 'description',
+      title: 'Page Description',
+      type: 'text',
+      description: 'Optional description text below the page title. Will be hidden if empty.',
+    },
+    {
       name: 'contactTypes',
       title: 'Contact Types',
       type: 'array',

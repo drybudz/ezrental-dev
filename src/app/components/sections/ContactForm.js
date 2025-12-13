@@ -2,7 +2,14 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './styles/ContactForm.module.css';
+
+// Register GSAP plugins
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const SUBMITTING = 'submitting';
 const SUCCESS = 'success';
@@ -23,9 +30,12 @@ export default function ContactForm({ contactPageData }) {
   });
   const [errors, setErrors] = useState({});
   const timeoutsRef = useRef([]);
+  const typesGridRef = useRef(null);
+  const typeButtonRefs = useRef([]);
 
   const contactTypes = contactPageData?.contactTypes || [];
   const title = contactPageData?.title || '';
+  const description = contactPageData?.description || '';
 
   const addTimeout = (callback, delay) => {
     const id = setTimeout(callback, delay);
@@ -39,6 +49,28 @@ export default function ContactForm({ contactPageData }) {
   };
 
   useEffect(() => () => clearPendingTimeouts(), []);
+
+  // Animate type buttons on mount
+  useEffect(() => {
+    if (!typesGridRef.current || contactTypes.length === 0) return;
+
+    const buttons = typeButtonRefs.current.filter(Boolean);
+    if (buttons.length === 0) return;
+
+    // Buttons already have initial hidden state from CSS, just animate them in
+    gsap.to(buttons, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+      stagger: 0.3,
+      scrollTrigger: {
+        trigger: typesGridRef.current,
+        start: 'top 80%',
+        once: true,
+      },
+    });
+  }, [contactTypes.length]);
 
   const validateName = (name) => name.trim().length >= 3;
   const validateCompany = (company) => company.trim().length >= 2;
@@ -165,13 +197,17 @@ export default function ContactForm({ contactPageData }) {
       <div className={styles.container}>
         <div className={styles.titleColumn}>
           <h2 className={styles.title}>{title}</h2>
+          {description?.trim() && (
+            <p className={styles.description}>{description}</p>
+          )}
         </div>
 
         <div className={styles.typesColumn}>
-          <div className={styles.typesGrid}>
+          <div className={styles.typesGrid} ref={typesGridRef}>
             {contactTypes.map((type, index) => (
               <button
                 key={index}
+                ref={(el) => (typeButtonRefs.current[index] = el)}
                 className={`${styles.typeButton} ${
                   selectedType === type.value ? styles.selected : ''
                 }`}

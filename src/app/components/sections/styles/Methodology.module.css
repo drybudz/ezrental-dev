@@ -30,8 +30,8 @@
   grid-template-columns: repeat(3, 1fr); /* Force 3 columns */
   gap: 40px;
   max-width: 1820px;
-  margin: 0 auto;
-  padding: 0 32px;
+  margin: 0 100px;
+  padding: 0;
 }
 
 .step {

@@ -252,6 +252,7 @@ export async function getAllEZRentalData() {
         },
         "contactPage": *[_type == "contactPage"][0]{
           title,
+          description,
           contactTypes[]{
             value
           }
