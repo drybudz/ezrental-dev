@@ -195,12 +195,17 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+
+  .orangeBarContent {
+    padding: 0 0px;
+  }
+
   .orangeBar {
     padding: 16px;
   }
 
   .blackBar {
-    padding: 24px;
+    padding: 0px;
   }
 
   .blackBarContent {
@@ -333,7 +338,7 @@
   .additionalLink,
   .additionalText,
   .socialLink {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .rightContent {

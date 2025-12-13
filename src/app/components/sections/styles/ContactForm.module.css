@@ -9,12 +9,18 @@
 
 .container {
     max-width: 1820px;
-    margin: 0 100px;
+    margin: 0;
     padding: 0px;
     display: flex;
     gap: 300px;
     align-items: flex-start;
     width: 100%;
+}
+
+@media (min-width: 769px) {
+    .container {
+        margin: 0 100px;
+    }
 }
 
 .titleColumn {
@@ -28,7 +34,13 @@
     width: 70%;
     display: flex;
     justify-content: flex-end;
-    margin-right: 70px;
+    margin-right: 0;
+}
+
+@media (min-width: 769px) {
+    .typesColumn {
+        margin-right: 70px;
+    }
 }
 
 .title {

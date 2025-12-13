@@ -152,6 +152,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  
   .navigation {
     padding: 16px;
   }
@@ -159,6 +160,7 @@
   .navContainer {
     flex-direction: column;
     gap: 16px;
+    padding: 0 0px;
   }
   
   .menu {
