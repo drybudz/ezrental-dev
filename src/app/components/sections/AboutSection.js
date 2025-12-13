@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { urlFor, getHotspotPosition } from '../../../sanity/lib/image';
 import styles from './styles/AboutSection.module.css';
 
 // Register GSAP plugins
@@ -21,6 +22,10 @@ export default function AboutSection({ aboutSection }) {
   }
 
   const { items, image } = aboutSection;
+
+  // Generate image URL with crop and get hotspot position
+  const imageUrl = image?.asset ? urlFor(image).url() : null;
+  const objectPosition = image?.hotspot ? getHotspotPosition(image.hotspot) : 'center';
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -103,13 +108,14 @@ export default function AboutSection({ aboutSection }) {
       </div>
 
       {/* Full Width Image */}
-      {image?.asset?.url && (
+      {imageUrl && (
         <div className={styles.imageContainer} ref={imageRef}>
           <Image
-            src={image.asset.url}
-            alt={image.alt || 'About section image'}
+            src={imageUrl}
+            alt={image?.alt || 'About section image'}
             fill
             className={styles.image}
+            style={{ objectPosition }}
           />
         </div>
       )}

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { urlFor, getHotspotPosition } from '../../../sanity/lib/image';
 import styles from './styles/LeftInfoBanner.module.css';
 
 // Register GSAP plugins
@@ -24,6 +25,10 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
   }
 
   const { header, image, title, description, cta } = leftInfoBanner;
+
+  // Generate image URL with crop and get hotspot position
+  const imageUrl = image?.asset ? urlFor(image).url() : null;
+  const objectPosition = image?.hotspot ? getHotspotPosition(image.hotspot) : 'center';
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -93,13 +98,14 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
 
   return (
     <section className={styles.leftInfoBanner} ref={containerRef}>
-      {image?.asset?.url && (
+      {imageUrl && (
         <div className={styles.imageBackground}>
           <Image
-            src={image.asset.url}
-            alt={image.alt || 'Banner background'}
+            src={imageUrl}
+            alt={image?.alt || 'Banner background'}
             fill
             className={styles.backgroundImage}
+            style={{ objectPosition }}
           />
           <div className={styles.imageOverlay} />
         </div>

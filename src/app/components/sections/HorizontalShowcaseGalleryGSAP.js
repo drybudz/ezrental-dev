@@ -203,6 +203,11 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
                       className={styles.image}
                       sizes="(max-width: 768px) 100vw, 33vw"
                       priority={slotIdx < 2 && !pendingImages[slotIdx]}
+                      style={{ 
+                        objectPosition: item.image?.hotspot 
+                          ? `${item.image.hotspot.x * 100}% ${item.image.hotspot.y * 100}%`
+                          : 'center'
+                      }}
                     />
                   </div>
                 )}
@@ -215,6 +220,11 @@ export default function HorizontalShowcaseGalleryGSAP({ horizontalShowcase }) {
                       fill
                       className={styles.image}
                       sizes="(max-width: 768px) 100vw, 33vw"
+                      style={{ 
+                        objectPosition: items[pendingImages[slotIdx]].image?.hotspot 
+                          ? `${items[pendingImages[slotIdx]].image.hotspot.x * 100}% ${items[pendingImages[slotIdx]].image.hotspot.y * 100}%`
+                          : 'center'
+                      }}
                     />
                   </div>
                 )}

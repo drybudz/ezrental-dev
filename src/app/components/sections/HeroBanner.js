@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { urlFor, getHotspotPosition } from '../../../sanity/lib/image';
 import styles from './styles/HeroBanner.module.css';
 
 export default function HeroBanner({ heroText, heroImage, heroDescription }) {
@@ -16,17 +17,22 @@ export default function HeroBanner({ heroText, heroImage, heroDescription }) {
   const opacity = Math.max(0, 1 - scrollY / 500);
   const translateY = Math.min(200, scrollY * 0.5);
 
+  // Generate image URL with crop and get hotspot position
+  const imageUrl = heroImage?.asset ? urlFor(heroImage).url() : null;
+  const objectPosition = heroImage?.hotspot ? getHotspotPosition(heroImage.hotspot) : 'center';
+
   return (
     <section className={styles.heroBanner}>
       {/* Background Image */}
-      {heroImage?.asset?.url && (
+      {imageUrl && (
         <div className={styles.backgroundImage}>
           <Image
-            src={heroImage.asset.url}
-            alt={heroImage.alt || 'Hero background'}
+            src={imageUrl}
+            alt={heroImage?.alt || 'Hero background'}
             fill
             priority
             className={styles.heroImage}
+            style={{ objectPosition }}
           />
         </div>
       )}

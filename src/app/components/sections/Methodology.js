@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { urlFor, getHotspotPosition } from '../../../sanity/lib/image';
 import styles from './styles/Methodology.module.css';
 
 // Register GSAP plugins
@@ -19,6 +20,10 @@ export default function Methodology({ methodology }) {
   }
 
   const { image, steps } = methodology;
+
+  // Generate image URL with crop and get hotspot position for background
+  const imageUrl = image?.asset ? urlFor(image).url() : null;
+  const backgroundPosition = image?.hotspot ? getHotspotPosition(image.hotspot) : 'center';
 
   useEffect(() => {
     if (!containerRef.current || steps.length === 0) return;
@@ -85,10 +90,13 @@ export default function Methodology({ methodology }) {
   return (
     <section className={styles.methodology} ref={containerRef}>
       {/* Parallax Background Image */}
-      {image?.asset?.url && (
+      {imageUrl && (
         <div 
           className={styles.parallaxImage}
-          style={{ backgroundImage: `url(${image.asset.url})` }}
+          style={{ 
+            backgroundImage: `url(${imageUrl})`,
+            backgroundPosition
+          }}
         />
       )}
 

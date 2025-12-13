@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { urlFor, getHotspotPosition } from '../../../sanity/lib/image';
 import styles from './styles/FiftyContact.module.css';
 
 // Register GSAP plugins
@@ -22,6 +23,10 @@ export default function FiftyContact({ fiftyContact }) {
   }
 
   const { image, title, description, cta } = fiftyContact;
+
+  // Generate image URL with crop and get hotspot position
+  const imageUrl = image?.asset ? urlFor(image).url() : null;
+  const objectPosition = image?.hotspot ? getHotspotPosition(image.hotspot) : 'center';
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -136,12 +141,13 @@ export default function FiftyContact({ fiftyContact }) {
     <section className={styles.fiftyContact} ref={containerRef}>
       {/* Left Column - Image */}
       <div className={styles.imageColumn}>
-        {image?.asset?.url && (
+        {imageUrl && (
           <Image
-            src={image.asset.url}
-            alt={image.alt || 'Contact section image'}
+            src={imageUrl}
+            alt={image?.alt || 'Contact section image'}
             fill
             className={styles.image}
+            style={{ objectPosition }}
           />
         )}
       </div>

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
+import { urlFor } from '../../../sanity/lib/image';
 import styles from './styles/HeroBannerLoader.module.css';
 
 export default function HeroBannerLoader({ loaderSettings, onComplete }) {
@@ -9,8 +10,10 @@ export default function HeroBannerLoader({ loaderSettings, onComplete }) {
   const loaderBgRef = useRef(null);
   const [showLoader, setShowLoader] = useState(false);
 
-  // Get loader settings with defaults
-  const loaderImage = loaderSettings?.image?.asset?.url || '/images/icon-loading.png';
+  // Get loader settings with defaults - use urlFor if image from Sanity
+  const loaderImage = loaderSettings?.image?.asset 
+    ? urlFor(loaderSettings.image).url() 
+    : '/images/icon-loading.png';
   const loaderSize = loaderSettings?.size || 60;
   const animationSpeed = loaderSettings?.animationDuration || 2;
   const bgColor = loaderSettings?.backgroundColor || '#231F20';

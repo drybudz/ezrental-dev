@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { urlFor, getHotspotPosition } from '../../../sanity/lib/image';
 import styles from './styles/HeroBanner.module.css';
 
 // Register GSAP plugins
@@ -56,17 +57,22 @@ export default function HeroBannerGSAP({ heroText, heroImage, loaderFinished }) 
     };
   }, [heroText]);
 
+  // Generate image URL with crop and get hotspot position
+  const imageUrl = heroImage?.asset ? urlFor(heroImage).url() : null;
+  const objectPosition = heroImage?.hotspot ? getHotspotPosition(heroImage.hotspot) : 'center';
+
   return (
     <section className={styles.heroBanner} ref={containerRef}>
       <div ref={heroSectionRef} style={{ opacity: 0 }}>
         <div className={styles.backgroundImage}>
-          {heroImage?.asset?.url && (
+          {imageUrl && (
             <Image
-              src={heroImage.asset.url}
-              alt={heroImage.alt || 'Hero background'}
+              src={imageUrl}
+              alt={heroImage?.alt || 'Hero background'}
               fill
               className={styles.heroImage}
               priority
+              style={{ objectPosition }}
             />
           )}
         </div>

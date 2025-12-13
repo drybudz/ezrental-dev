@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { urlFor, getHotspotPosition } from '../../../sanity/lib/image';
 import styles from './styles/FiftySection.module.css';
 
 // Register GSAP plugins
@@ -23,6 +24,10 @@ export default function FiftySection({ fiftySection }) {
   }
 
   const { header, image, title, description, cta } = fiftySection;
+
+  // Generate image URL with crop and get hotspot position
+  const imageUrl = image?.asset ? urlFor(image).url() : null;
+  const objectPosition = image?.hotspot ? getHotspotPosition(image.hotspot) : 'center';
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -165,12 +170,13 @@ export default function FiftySection({ fiftySection }) {
     <section className={styles.fiftySection} ref={containerRef}>
       {/* Left Column - Image */}
       <div className={styles.imageColumn}>
-        {image?.asset?.url && (
+        {imageUrl && (
           <Image
-            src={image.asset.url}
-            alt={image.alt || 'Section image'}
+            src={imageUrl}
+            alt={image?.alt || 'Section image'}
             fill
             className={styles.image}
+            style={{ objectPosition }}
           />
         )}
       </div>

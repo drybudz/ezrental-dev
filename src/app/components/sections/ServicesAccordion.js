@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { urlFor, getHotspotPosition } from '../../../sanity/lib/image';
 import styles from './styles/ServicesAccordion.module.css';
 
 // Register GSAP plugins
@@ -19,6 +20,10 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
   const imageRef = useRef(null);
   const accordionRefs = useRef([]);
   const detailsRefs = useRef([]);
+
+  // Generate image URL with crop and get hotspot position
+  const imageUrl = servicesImage?.asset ? urlFor(servicesImage).url() : null;
+  const objectPosition = servicesImage?.hotspot ? getHotspotPosition(servicesImage.hotspot) : 'center';
 
   // Detect mobile
   useEffect(() => {
@@ -139,14 +144,15 @@ export default function ServicesAccordion({ servicesImage, services = [] }) {
       <div className={styles.container}>
         {/* Left Column - Image with Parallax */}
         <div className={styles.imageColumn}>
-          {servicesImage?.asset?.url && (
+          {imageUrl && (
             <div className={styles.imageWrapper} ref={imageRef}>
               <Image
-                src={servicesImage.asset.url}
-                alt={servicesImage.alt || 'Services'}
+                src={imageUrl}
+                alt={servicesImage?.alt || 'Services'}
                 width={800}
                 height={1200}
                 className={styles.image}
+                style={{ objectPosition }}
               />
             </div>
           )}

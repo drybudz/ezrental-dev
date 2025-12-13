@@ -15,6 +15,8 @@ export async function getAllEZRentalData() {
                 lqip
               }
             },
+            crop,
+            hotspot,
             alt
           },
           loaderSettings{
@@ -26,6 +28,8 @@ export async function getAllEZRentalData() {
                   lqip
                 }
               },
+              crop,
+              hotspot,
               alt
             },
             size,
@@ -67,6 +71,8 @@ export async function getAllEZRentalData() {
                   lqip
                 }
               },
+              crop,
+              hotspot,
               alt
             },
             steps[]{
@@ -85,6 +91,8 @@ export async function getAllEZRentalData() {
                   lqip
                 }
               },
+              crop,
+              hotspot,
               alt
             },
             title,
@@ -107,6 +115,8 @@ export async function getAllEZRentalData() {
                   lqip
                 }
               },
+              crop,
+              hotspot,
               alt
             },
             title,
@@ -127,6 +137,8 @@ export async function getAllEZRentalData() {
                 lqip
               }
             },
+            crop,
+            hotspot,
             alt
           },
           mainMenu[]{
@@ -159,6 +171,8 @@ export async function getAllEZRentalData() {
                 lqip
               }
             },
+            crop,
+            hotspot,
             alt
           },
           fiftySection{
@@ -171,6 +185,8 @@ export async function getAllEZRentalData() {
                   lqip
                 }
               },
+              crop,
+              hotspot,
               alt
             },
             title,
@@ -207,6 +223,8 @@ export async function getAllEZRentalData() {
                 lqip
               }
             },
+            crop,
+            hotspot,
             alt
           }
         },
@@ -221,6 +239,8 @@ export async function getAllEZRentalData() {
                 lqip
               }
             },
+            crop,
+            hotspot,
             alt
           },
           servicesImage{
@@ -231,6 +251,8 @@ export async function getAllEZRentalData() {
                 lqip
               }
             },
+            crop,
+            hotspot,
             alt
           },
           services[]{
@@ -247,6 +269,8 @@ export async function getAllEZRentalData() {
                 lqip
               }
             },
+            crop,
+            hotspot,
             alt
           }
         },

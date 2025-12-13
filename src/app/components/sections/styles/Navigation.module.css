@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: transparent; /* allow hero under nav */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)); /* gradient from top to transparent */
   backdrop-filter: none;
   padding: 30px 30px 7px 30px;
   letter-spacing: .48px;

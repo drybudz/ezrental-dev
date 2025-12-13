@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { urlFor, getHotspotPosition } from '../../../sanity/lib/image';
 import styles from './styles/QuoteSection.module.css';
 
 // Register GSAP plugins
@@ -17,6 +18,10 @@ export default function QuoteSection({ quoteTitle, quoteImage }) {
   const imageWrapperRef = useRef(null);
   const imageInnerRef = useRef(null);
   const [animationSide, setAnimationSide] = useState(null);
+
+  // Generate image URL with crop and get hotspot position
+  const imageUrl = quoteImage?.asset ? urlFor(quoteImage).url() : null;
+  const objectPosition = quoteImage?.hotspot ? getHotspotPosition(quoteImage.hotspot) : 'center';
 
   useEffect(() => {
     if (!titleRef.current || !sectionRef.current) return;
@@ -126,16 +131,17 @@ export default function QuoteSection({ quoteTitle, quoteImage }) {
           </div>
         </div>
       )}
-      {quoteImage?.asset?.url && (
+      {imageUrl && (
         <div className={styles.imageContainer}>
           <div ref={imageWrapperRef} className={styles.imageWrapper}>
             <div ref={imageInnerRef} className={styles.imageInner}>
               <Image
-                src={quoteImage.asset.url}
-                alt={quoteImage.alt || 'Quote section image'}
+                src={imageUrl}
+                alt={quoteImage?.alt || 'Quote section image'}
                 fill
                 className={styles.image}
                 sizes="100vw"
+                style={{ objectPosition }}
               />
             </div>
           </div>
