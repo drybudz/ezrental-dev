@@ -12,14 +12,14 @@ export const structure = (S, context) =>
         context,
       }),
       orderableDocumentListDeskItem({
-        type: 'aboutPage',
-        title: 'About Pages',
+        type: 'servicesPage',
+        title: 'Services Pages',
         S,
         context,
       }),
       orderableDocumentListDeskItem({
-        type: 'servicesPage',
-        title: 'Services Pages',
+        type: 'aboutPage',
+        title: 'About Pages',
         S,
         context,
       }),
