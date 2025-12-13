@@ -1,163 +1,18 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './styles/LeftInfoBanner.module.css';
 
-// Register GSAP plugins
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 export default function LeftInfoBanner({ leftInfoBanner }) {
-  const sectionRef = useRef(null);
-  const headerRef = useRef(null);
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const ctaRef = useRef(null);
-
   if (!leftInfoBanner) {
     return null;
   }
 
   const { header, image, title, description, cta } = leftInfoBanner;
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      // Set initial state - only animate elements that exist
-      const elementsToAnimate = [titleRef.current, ctaRef.current].filter(Boolean);
-      if (headerRef.current) elementsToAnimate.push(headerRef.current);
-      if (descriptionRef.current) elementsToAnimate.push(descriptionRef.current);
-      
-      gsap.set(elementsToAnimate, {
-        opacity: 0,
-        x: -100
-      });
-
-      // Create ScrollTrigger
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top 80%',
-        end: 'bottom -10%',
-        onEnter: () => {
-          // Header animation (if exists)
-          if (headerRef.current) {
-            gsap.to(headerRef.current, {
-              opacity: 1,
-              x: 0,
-              duration: 0.8,
-              ease: 'power2.out'
-            });
-          }
-          
-          // Title animation
-          gsap.to(titleRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: headerRef.current ? 0.2 : 0
-          });
-          
-          // Description animation (if exists)
-          if (descriptionRef.current) {
-            gsap.to(descriptionRef.current, {
-              opacity: 1,
-              x: 0,
-              duration: 0.8,
-              ease: 'power2.out',
-              delay: headerRef.current ? 0.4 : 0.2
-            });
-          }
-          
-          // CTA animation with delay
-          if (ctaRef.current) {
-            gsap.to(ctaRef.current, {
-              opacity: 1,
-              x: 0,
-              duration: 0.8,
-              ease: 'power2.out',
-              delay: headerRef.current ? 0.6 : (descriptionRef.current ? 0.4 : 0.2)
-            });
-          }
-        },
-        onLeave: () => {
-          const elementsToReset = [titleRef.current].filter(Boolean);
-          if (headerRef.current) elementsToReset.push(headerRef.current);
-          if (descriptionRef.current) elementsToReset.push(descriptionRef.current);
-          if (ctaRef.current) elementsToReset.push(ctaRef.current);
-          
-          gsap.to(elementsToReset, {
-            opacity: 0,
-            x: -100,
-            duration: 0.4,
-            ease: 'power2.in'
-          });
-        },
-        onEnterBack: () => {
-          if (headerRef.current) {
-            gsap.to(headerRef.current, {
-              opacity: 1,
-              x: 0,
-              duration: 0.8,
-              ease: 'power2.out'
-            });
-          }
-          gsap.to(titleRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: headerRef.current ? 0.2 : 0
-          });
-          if (descriptionRef.current) {
-            gsap.to(descriptionRef.current, {
-              opacity: 1,
-              x: 0,
-              duration: 0.8,
-              ease: 'power2.out',
-              delay: headerRef.current ? 0.4 : 0.2
-            });
-          }
-          if (ctaRef.current) {
-            gsap.to(ctaRef.current, {
-              opacity: 1,
-              x: 0,
-              duration: 0.8,
-              ease: 'power2.out',
-              delay: headerRef.current ? 0.6 : (descriptionRef.current ? 0.4 : 0.2)
-            });
-          }
-        },
-        onLeaveBack: () => {
-          const elementsToReset = [titleRef.current].filter(Boolean);
-          if (headerRef.current) elementsToReset.push(headerRef.current);
-          if (descriptionRef.current) elementsToReset.push(descriptionRef.current);
-          if (ctaRef.current) elementsToReset.push(ctaRef.current);
-          
-          gsap.to(elementsToReset, {
-            opacity: 0,
-            x: -100,
-            duration: 0.4,
-            ease: 'power2.in'
-          });
-        }
-      });
-    }, sectionRef);
-
-    return () => {
-      ctx.revert();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
-
   return (
-    <section className={styles.leftInfoBanner} ref={sectionRef}>
+    <section className={styles.leftInfoBanner}>
       {image?.asset?.url && (
         <div className={styles.imageBackground}>
           <Image
@@ -174,23 +29,22 @@ export default function LeftInfoBanner({ leftInfoBanner }) {
         <div className={styles.contentContainer}>
           {/* Header - only render if header exists */}
           {header?.trim() && (
-            <div ref={headerRef} className={styles.header}>{header}</div>
+            <div className={styles.header}>{header}</div>
           )}
 
           {/* Title */}
           {title && (
-            <h2 ref={titleRef} className={styles.title}>{title}</h2>
+            <h2 className={styles.title}>{title}</h2>
           )}
 
           {/* Description - only render if description exists */}
           {description?.trim() && (
-            <p ref={descriptionRef} className={styles.description}>{description}</p>
+            <p className={styles.description}>{description}</p>
           )}
 
           {/* CTA Button */}
           {cta?.text && cta?.url && (
             <Link
-              ref={ctaRef}
               href={cta.url}
               target={cta.target || '_self'}
               className={styles.ctaButton}

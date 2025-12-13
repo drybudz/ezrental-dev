@@ -24,73 +24,55 @@ export default function Methodology({ methodology }) {
     if (!containerRef.current || steps.length === 0) return;
 
     const ctx = gsap.context(() => {
+      // Collect all step elements - need to do this inside context and check they exist
+      const stepElements = stepsRef.current.filter(ref => ref !== null);
+      
+      if (stepElements.length === 0) return; // Safety check
+
       // Set initial state for all steps
-      steps.forEach((_, index) => {
-        const stepElement = stepsRef.current[index];
-        if (stepElement) {
-          const counter = stepElement.querySelector('.counter');
-          const description = stepElement.querySelector('.description');
-          
-          gsap.set([counter, description], { 
-            opacity: 0,
-            y: 14
-          });
-        }
+      gsap.set(stepElements, {
+        opacity: 0,
+        y: 70 // Start 70px down
       });
 
-      // Create individual ScrollTriggers for each step based on scroll position
-      steps.forEach((_, index) => {
-        const stepElement = stepsRef.current[index];
-        if (stepElement) {
-          const counter = stepElement.querySelector('.counter');
-          const description = stepElement.querySelector('.description');
-          
-          // Single ScrollTrigger for both counter and description together
-          ScrollTrigger.create({
-            trigger: stepElement,
-            start: "top 80%",
-            end: "bottom -100px",
-            onEnter: () => {
-              // Animate both counter and description together
-              gsap.to([counter, description], {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: "power2.out",
-                delay: index * 0.3 // Add delay between steps
-              });
-            },
-            onLeave: () => {
-              // Fade out both counter and description together
-              gsap.to([counter, description], {
-                opacity: 0,
-                y: 14,
-                duration: 0.4,
-                ease: "power2.in"
-              });
-            },
-            onEnterBack: () => {
-              // Animate both counter and description together when scrolling back up
-              gsap.to([counter, description], {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: "power2.out",
-                delay: index * 0.3
-              });
-            },
-            onLeaveBack: () => {
-              // Fade out both counter and description together when scrolling back up and out
-              gsap.to([counter, description], {
-                opacity: 0,
-                y: 14,
-                duration: 0.4,
-                ease: "power2.in"
-              });
-            }
+      const animateSteps = () => {
+        // Kill any running animations first
+        stepElements.forEach(stepElement => {
+          gsap.killTweensOf(stepElement);
+        });
+        
+        // Animate each step with 0.7s delay between them
+        stepElements.forEach((stepElement, index) => {
+          gsap.to(stepElement, {
+            opacity: 1,
+            y: 0, // Move up to original position
+            duration: 1.7,
+            ease: "power2.out",
+            delay: index * 0.7 // 0.7s delay between each step
           });
+        });
+      };
 
-        }
+      const resetSteps = () => {
+        // Kill any running animations
+        stepElements.forEach(stepElement => {
+          gsap.killTweensOf(stepElement);
+        });
+        // Reset to initial state
+        gsap.set(stepElements, {
+          opacity: 0,
+          y: 70
+        });
+      };
+
+      // Create ScrollTrigger - make sure it triggers every time it enters view
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top 20%",
+        end: "bottom 20%",
+        onEnter: animateSteps,
+        onEnterBack: animateSteps, // Trigger when scrolling back down
+        onLeaveBack: resetSteps // Reset when scrolling up past section (so it can re-animate when scrolling down again)
       });
     }, containerRef);
 
@@ -119,8 +101,8 @@ export default function Methodology({ methodology }) {
               ref={el => stepsRef.current[index] = el}
               className={styles.step}
             >
-              <div className={`${styles.counter} counter`}>{step.counter}</div>
-              <div className={`${styles.description} description`}>{step.description}</div>
+              <div className={styles.counter}>{step.counter}</div>
+              <div className={styles.description}>{step.description}</div>
             </div>
           ))}
         </div>
