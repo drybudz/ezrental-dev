@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -16,6 +16,7 @@ export default function HeroBannerGSAP({ heroText, heroImage, heroVideo, loaderF
   const textRef = useRef(null);
   const heroSectionRef = useRef(null);
   const videoRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(true); // Start muted for autoplay
 
   // Fade in hero section when loader is finished
   useEffect(() => {
@@ -67,6 +68,15 @@ export default function HeroBannerGSAP({ heroText, heroImage, heroVideo, loaderF
   const hasVideo = !!videoUrl;
   const hasImage = !!imageUrl;
 
+  // Handle video click to toggle audio
+  const handleVideoClick = () => {
+    if (videoRef.current) {
+      const newMutedState = !isMuted;
+      videoRef.current.muted = newMutedState;
+      setIsMuted(newMutedState);
+    }
+  };
+
   return (
     <section className={styles.heroBanner} ref={containerRef}>
       <div ref={heroSectionRef} style={{ opacity: 0 }}>
@@ -77,10 +87,11 @@ export default function HeroBannerGSAP({ heroText, heroImage, heroVideo, loaderF
               className={styles.heroVideo}
               autoPlay
               loop
-              muted
+              muted={isMuted}
               playsInline
               poster={imageUrl || undefined}
               style={{ objectPosition }}
+              onClick={handleVideoClick}
             >
               <source src={videoUrl} type="video/mp4" />
               {/* Fallback: if video fails, browser will show poster image */}
